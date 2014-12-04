@@ -1,0 +1,73 @@
+extends layout
+
+div.container
+
+  div.row
+
+  block content
+
+      .panel.panel-default
+        .panel-heading
+          h1
+            b Drude-Lorentz Model
+        .panel-body
+          p Compute and plot the complex permittivity of metals and semiconductors using the Drude-Lorentz model. Material optical properties are stored using MongoDB. The view is constructed using Express and Jade. AngularJS is used for updating the view. D3 is used for plotting. Math.js is used for evaluating mathematical functions. 
+
+  div.row
+
+    div.col-1
+
+      block materials
+
+        .panel.panel-default
+          .panel-heading
+            h2 Materials
+          .panel-body
+            .nav(role="navigation")
+              ul(ng-controller="listMaterials", class="nav nav-pills")
+                li(ng-repeat="material in Materials", role="presentation", class="active")
+                  a(href='#') {{material.name}}
+
+      block parameters
+
+        .panel.panel-default
+          .panel-heading
+            h2 Parameters
+          .panel-body
+            ul
+              li {{currentMaterial.eps0}}
+              li {{currentMaterial.meff}}
+              li {{currentMaterial.g0}}
+              li {{currentMaterial.f1}}
+              li {{currentMaterial.w1}}
+              li {{currentMaterial.g1}}
+              li {{currentMaterial.f2}}
+              li {{currentMaterial.w2}}
+              li {{currentMaterial.g2}}
+              li {{currentMaterial.f3}}
+              li {{currentMaterial.w3}}
+              li {{currentMaterial.g3}}
+
+      block limits
+
+        .panel.panel-default
+          .panel-heading
+            h2 Wavelength Limits
+          .panel-body
+            div.input-group
+              span.input-group-addon Minimum Wavelength
+              input.form-control(name='wmin', placeholder='0.3')
+            br
+            div.input-group
+              span.input-group-addon Maximum Wavelength
+              input.form-control(name='wmin', placeholder='2')
+
+    div.col-2
+
+      block plot
+    
+        .panel.panel-default
+          .panel-heading
+            h2 Plot
+          .panel-body
+            p Plot of the complex permittivity, one right-hand side of the control panel

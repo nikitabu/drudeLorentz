@@ -1,3 +1,4 @@
+// import dependencies
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,13 +7,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var material = require('./routes/material');
 
 var app = express();
+
+// var database = require('./public/javascript/database');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,14 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
-
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/materials', materials);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -66,5 +62,61 @@ app.use(function(err, req, res, next) {
     });
 });
 
+mongoose.connect('mongodb://localhost/test');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log('connected to database');
+});
+
+var Schema = mongoose.Schema;
+
+var materialSchema = new Schema({
+    name : String,
+    eps0 : Number,
+    meff : Number,
+    g0 : Number,
+    f1 : Number,
+    w1 : Number,
+    g1 : Number,
+    f2 : Number,
+    w2 : Number,
+    g2 : Number,
+    f3 : Number,
+    w3 : Number,
+    g3 : Number,
+});
+
+var material = mongoose.model('material', materialSchema)
+
+var Au = new material({
+    name : 'Au',
+    eps0 : 11.7,
+    meff : 0.1,
+    g0 : 0,
+    f1 : 1,
+    w1 : 1,
+    g1 : 1,
+    f2 : 2,
+    w2 : 2,
+    g2 : 2,
+    f3 : 3,
+    w3 : 3,
+    g3 : 3,
+});
+
+console.log(Au.name);
+
+//Au.save(function (err, Au) {
+//    if (err) return console.error(err);
+//    console.log('saved Au to database');
+//});
+
+app.get('/material', function(req, res) {
+    mongoose.model('material').find(function(err, material) {
+	res.send(material);
+    });
+});
 
 module.exports = app;

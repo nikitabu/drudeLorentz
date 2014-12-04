@@ -1,0 +1,50 @@
+extends layout
+
+block content
+
+    .panel.panel-default
+      .panel-heading
+        h1 Add New Material
+      .panel-body
+          form#formAddMaterial(name="addMaterial",method="post",action="/addmaterial")
+            div.input-group
+              span.input-group-addon Material Name
+              input#inputName.form-control(type="text", placeholder="Au", name="materialname")
+            br      
+            div.input-group
+              span.input-group-addon Dielectric Constant
+              input#inputEps0.form-control(type="number", placeholder="11.7", name="eps0")
+            br      
+            div.input-group
+              span.input-group-addon Effective Mass
+              input#inputMeff.form-control(type="number", placeholder="0.1", name="meff")
+            br      
+            div.input-group
+              span.input-group-addon Drude Damping (eV)
+              input#inputG0.form-control(type="number", placeholder="1", name="g0")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Resonant Frequency #1 (eV)
+              input#inputW1.form-control(type="number", placeholder="1", name="w1")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Damping Rate #1 (eV)
+              input#inputG1.form-control(type="number", placeholder="1", name="g1")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Scattering Amplitude #1 (eV)
+              input#inputF1.form-control(type="number", placeholder="1", name="f1")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Resonant Frequency #2 (eV)
+              input#inputW2.form-control(type="number", placeholder="1", name="w1")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Damping Rate #2 (eV)
+              input#inputG2.form-control(type="number", placeholder="1", name="g1")
+            br      
+            div.input-group
+              span.input-group-addon Lorentz Scattering Amplitude #2 (eV)
+              input#inputF2.form-control(type="number", placeholder="1", name="f1")
+            br      
+            button#btnSubmit.btn.btn-primary(type="submit") submit  
