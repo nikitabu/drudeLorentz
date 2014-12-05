@@ -81,13 +81,15 @@ router.post('/addmaterial', function(req, res) {
     var g2 = req.body.g2;
     var f2 = req.body.f2;
 
-    console.log('setting collection...');
+    //console.log('setting collection...');
 
     // Set our collection
-    var collection = db.get('material');
+    //var collection = db.get('material');
+
+    console.log('set collection, submitting to db...');
 
     // Submit to the DB
-    collection.insert({
+    db.collection('materials').insert({
         "name" : name,
         "eps0" : eps0,
 	"meff" : meff,
@@ -104,6 +106,7 @@ router.post('/addmaterial', function(req, res) {
             res.send("There was a problem adding the information to the database.");
         }
         else {
+	    console.log('inserted into collection');
             // If it worked, set the header so the address bar doesn't still say /adduser
             res.location("material");
             // And forward to success page
