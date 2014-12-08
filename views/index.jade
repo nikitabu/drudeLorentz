@@ -19,34 +19,35 @@ div.container
 
       block materials
 
-        .panel.panel-default
-          .panel-heading
-            h2 Materials
-          .panel-body
-            .nav(role="navigation")
-              ul(ng-controller="listMaterials", class="nav nav-pills")
-                li(ng-repeat="material in Materials", role="presentation", class="active")
-                  a(href='#') {{material.name}}
+        div(ng-controller='materialController')
 
-      block parameters
+          .panel.panel-default
+            .panel-heading
+              h2 Materials
+            .panel-body(role="navigation")
+              .nav
+                ul(class="nav nav-pills")
+                  li(ng-repeat='material in materials', role="presentation", class="active")
+                    a(href='#', ng-click="editCurrentMaterial(material);") {{material.name}}
+                  li {{currentMaterial.name}}  
 
-        .panel.panel-default
-          .panel-heading
-            h2 Parameters
-          .panel-body
-            ul
-              li {{currentMaterial.eps0}}
-              li {{currentMaterial.meff}}
-              li {{currentMaterial.g0}}
-              li {{currentMaterial.f1}}
-              li {{currentMaterial.w1}}
-              li {{currentMaterial.g1}}
-              li {{currentMaterial.f2}}
-              li {{currentMaterial.w2}}
-              li {{currentMaterial.g2}}
-              li {{currentMaterial.f3}}
-              li {{currentMaterial.w3}}
-              li {{currentMaterial.g3}}
+          .panel.panel-default
+            .panel-heading
+              h2 Parameters
+            .panel-body
+              ul(ng-model='currentMaterial')
+                li Testing {{materials.currentMaterial.eps0}}
+                li {{currentMaterial.name}}
+                li {{currentMaterial.g0}}
+                li {{currentMaterial.f1}}
+                li {{currentMaterial.w1}}
+                li {{currentMaterial.g1}}
+                li {{currentMaterial.f2}}
+                li {{currentMaterial.w2}}
+                li {{currentMaterial.g2}}
+                li {{currentMaterial.f3}}
+                li {{currentMaterial.w3}}
+                li {{currentMaterial.g3}}
 
       block limits
 
@@ -71,3 +72,5 @@ div.container
             h2 Plot
           .panel-body
             p Plot of the complex permittivity, one right-hand side of the control panel
+
+            svg#visualization(width="1000",height="500")
