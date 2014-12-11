@@ -1,6 +1,10 @@
+console.log('initialize chart');
+
 InitChart();
 
 function InitChart() {
+
+    console.log('initializing chart');
 
     var lineData = [{
 	'x': 1,
@@ -22,9 +26,10 @@ function InitChart() {
 	'y': 60
     }];
 
-    var vis = d3.select("#visualisation"),
-    WIDTH = 1000,
-    HEIGHT = 500,
+    var vis = d3.select("#plot"),
+
+    WIDTH = 600,
+    HEIGHT = 400,
     MARGINS = {
 	top: 20,
 	right: 20,
@@ -83,5 +88,9 @@ function InitChart() {
 	.attr("stroke", "blue")
 	.attr("stroke-width", 2)
 	.attr("fill", "none");
+
+    vis.append("div");
+
+    console.log("finished appending");
 
 }
