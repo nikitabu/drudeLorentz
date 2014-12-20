@@ -1,76 +1,60 @@
 extends layout
 
-div.container
+block heading
+  .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
+    .container
+      .navbar-header
+        .navbar-brand
+          h1
+            b Drude-Lorentz Model
 
-  div.row
+block input
 
-    div.col-md-6
+  div(ng-controller='materialController')
 
-      block content
+    .panel.panel-default
+      .panel-heading
+         h2 Materials
+      .panel-body(role="navigation")
+        .nav
+          ul(class="nav nav-pills")
+            li(ng-repeat='material in materials', role="presentation", class="active")
+              a(href='#', ng-click="editCurrentMaterial(material);") {{material.name}}
 
-        .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
-          .container
-            .navbar-header
-              .navbar-brand
-                h1
-                  b Drude-Lorentz Model
+    .panel.panel-default
+      .panel-heading
+        h2 Parameters
+      .panel-body
+        ul(ng-model='currentMaterial')
+          li Testing {{materials.currentMaterial.eps0}}
+          li {{currentMaterial.name}}
+          li {{currentMaterial.g0}}
+          li {{currentMaterial.f1}}
+          li {{currentMaterial.w1}}
+          li {{currentMaterial.g1}}
+          li {{currentMaterial.f2}}
+          li {{currentMaterial.w2}}
+          li {{currentMaterial.g2}}
+          li {{currentMaterial.f3}}
+          li {{currentMaterial.w3}}
+          li {{currentMaterial.g3}}
 
-      block materials
-
+    .panel.panel-default
+      .panel-heading
+        h2 Wavelength Limits
+      .panel-body
+        div.input-group
+          span.input-group-addon Minimum Wavelength
+          input.form-control(name='wmin', placeholder='0.3')
         br
-        br
-        br
-        br
+        div.input-group
+          span.input-group-addon Maximum Wavelength
+          input.form-control(name='wmin', placeholder='2')
 
-        div(ng-controller='materialController')
-
-          .panel.panel-default
-            .panel-heading
-              h2 Materials
-            .panel-body(role="navigation")
-              .nav
-                ul(class="nav nav-pills")
-                  li(ng-repeat='material in materials', role="presentation", class="active")
-                    a(href='#', ng-click="editCurrentMaterial(material);") {{material.name}}
-
-          .panel.panel-default
-            .panel-heading
-              h2 Parameters
-            .panel-body
-              ul(ng-model='currentMaterial')
-                li {{currentMaterial.name}}
-                li {{currentMaterial.eps0}}
-                li {{currentMaterial.g0}}
-                li {{currentMaterial.f1}}
-                li {{currentMaterial.w1}}
-                li {{currentMaterial.g1}}
-                li {{currentMaterial.f2}}
-                li {{currentMaterial.w2}}
-                li {{currentMaterial.g2}}
-                li {{currentMaterial.f3}}
-                li {{currentMaterial.w3}}
-                li {{currentMaterial.g3}}
-
-      block limits
-
-        .panel.panel-default
-          .panel-heading
-            h2 Wavelength Limits
-          .panel-body
-            div.input-group
-              span.input-group-addon Minimum Wavelength
-              input.form-control(name='wmin', placeholder='0.3')
-            br
-            div.input-group
-              span.input-group-addon Maximum Wavelength
-              input.form-control(name='wmin', placeholder='2')
-
-    div.col-md-6
-
-      block plot
-    
-        .panel.panel-default
-          .panel-heading
-            h2 Plot
-          .panel-body
-            svg#plot(width="600",height="400")
+block output
+  .panel.panel-default
+    .panel-heading
+      h2 Plot
+    .panel-body
+      svg#plot(width="800",height="500")
+       

@@ -2,9 +2,7 @@ doctype html
 html(ng-app="drudeLorentzApp")
   head
     title= "Optical Properties with the Drude-Lorentz Model"
- 
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    
+     
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js') // import angular js
     script(src='/javascripts/angular.js') //import angular controller
 
@@ -17,10 +15,15 @@ html(ng-app="drudeLorentzApp")
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css")
 
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
   body(ng-controller='materialController')
-    block content
-    block materials
-    block parameters
-    block limits
-    block plot
-    block todo
+
+    div.container
+      div.row
+        block heading
+      div.row
+        div.col-md-6
+          block input
+        div.col-md-6
+          block output
