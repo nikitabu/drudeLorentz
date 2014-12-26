@@ -1,13 +1,5 @@
 extends layout
 
-block heading
-  .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
-    .container
-      .navbar-header
-        .navbar-brand
-          h1
-            b Drude-Lorentz Model
-
 block input
 
   div(ng-controller='materialController')
@@ -20,25 +12,28 @@ block input
           ul(class="nav nav-pills")
             li(ng-repeat='material in materials', role="presentation", class="active")
               a(href='#', ng-click="editCurrentMaterial(material);") {{material.name}}
-
+            li(role="presentation", class="active")
+              a(href='/newmaterial') New
+      
     .panel.panel-default
       .panel-heading
         h2 Parameters
-      .panel-body
-        ul(ng-model='currentMaterial')
-          li Testing {{materials.currentMaterial.eps0}}
-          li {{currentMaterial.name}}
-          li {{currentMaterial.g0}}
-          li {{currentMaterial.f1}}
-          li {{currentMaterial.w1}}
-          li {{currentMaterial.g1}}
-          li {{currentMaterial.f2}}
-          li {{currentMaterial.w2}}
-          li {{currentMaterial.g2}}
-          li {{currentMaterial.f3}}
-          li {{currentMaterial.w3}}
-          li {{currentMaterial.g3}}
-
+      .panel-body(ng-model='currentMaterial')  
+        table.table
+          tr
+            $$\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 -\ i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}$$  
+          tr
+            td $\epsilon_0 = $#[span(mathjax-bind="currentMaterial.eps0")]
+            td $m^* = $#[span(mathjax-bind="currentMaterial.meff")]
+            td $\gamma_0 = $#[span(mathjax-bind="currentMaterial.g0")]
+          tr
+            td $f_1 = $#[span(mathjax-bind="currentMaterial.f1")]
+            td $\omega_1 = $#[span(mathjax-bind="currentMaterial.w1")]
+            td $\gamma_1 = $#[span(mathjax-bind="currentMaterial.g1")]
+          tr
+            td $f_2 = $#[span(mathjax-bind="currentMaterial.f2")]
+            td $\omega_2 = $#[span(mathjax-bind="currentMaterial.w2")]
+            td $\gamma_2 = $#[span(mathjax-bind="currentMaterial.g2")]
     .panel.panel-default
       .panel-heading
         h2 Wavelength Limits
@@ -57,4 +52,3 @@ block output
       h2 Plot
     .panel-body
       svg#plot(width="800",height="500")
-       
