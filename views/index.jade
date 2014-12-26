@@ -19,7 +19,7 @@ block input
       .panel-heading
         h2 Parameters
       .panel-body(ng-model='currentMaterial')  
-        table.table
+        table.table.table-hover.table-condensed
           tr
             $$\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 -\ i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}$$  
           tr
@@ -51,4 +51,4 @@ block output
     .panel-heading
       h2 Plot
     .panel-body
-      svg#plot(width="800",height="500")
+      svg#plot(width="550",height="400")
