@@ -1,6 +1,6 @@
 body {
   padding: 15px;
-  padding-top: 80px;
+  padding-top: 75px;
   font: 14px Helvetica, Arial,"Lucida Grande", sans-serif;
 }
 
@@ -22,10 +22,31 @@ h1 {
 }
 
 h2 {
-  margin: 3px 3px;
-  font-size: 26px;
+  margin: 2px 2px;
+  font-size: 24px;
 }
 
 .container{
   max-width: 1350px;
+}
+
+.col-md-6{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.navbar-brand{
+  margin-left: -5px;
+}
+
+.panel-heading{
+  padding: 4px 10px;
+}
+
+.table{
+  margin-bottom: 0px;
+}
+
+.MathJax_Display {
+  margin: 18px 5px; 
 }
