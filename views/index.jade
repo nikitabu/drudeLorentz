@@ -8,13 +8,16 @@ block input
       .panel-heading
          h2 Materials
       .panel-body(role="navigation")
-        .nav
-          ul(class="nav nav-pills")
-            li(ng-repeat='material in materials', role="presentation", class="active")
-              a(href='#', ng-click="editCurrentMaterial(material);") {{material.name}}
-            li(role="presentation", class="active")
-              a(href='/newmaterial') New
-      
+        .btn-group
+          ul(class="list-inline")
+            li(ng-repeat='material in materials')
+              button(class="btn btn-primary", ng-click="editCurrentMaterial(material);", type="submit")
+                {{material.name}}
+            li
+              a(class="btn btn-warning", role="button", href='/editmaterials') Edit
+            li
+              a(class="btn btn-success", role="button", href='/newmaterial') New
+    
     .panel.panel-default
       .panel-heading
         h2 Parameters
