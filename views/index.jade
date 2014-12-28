@@ -11,12 +11,12 @@ block input
         .btn-group
           ul(class="list-inline")
             li(ng-repeat='material in materials')
-              button(class="btn btn-primary", ng-click="editCurrentMaterial(material);", type="submit")
+              button(class="btn btn-primary", ng-class='currentClass(material.name)', ng-click="editCurrentMaterial(material);", type="submit")
                 {{material.name}}
             li
               a(class="btn btn-warning", role="button", href='/editmaterials') Edit
             li
-              a(class="btn btn-success", role="button", href='/newmaterial') New
+              a(class="btn btn-warning", role="button", href='/newmaterial') New
     
     .panel.panel-default
       .panel-heading

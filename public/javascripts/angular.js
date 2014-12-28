@@ -1,9 +1,13 @@
 (function(){
+    // initialize angularjs module
     var app = angular.module('drudeLorentzApp', []);
 
+    // define primary app controller
     app.controller('materialController', function($scope, $http){
+	// initialize materials object to null
 	$scope.materials = null;
 
+	// fill the materials object with an async GET request for a JSON object (from the database)
 	$http.get('/material')
 	     .success( function(data) {
 		 $scope.materials = data;
@@ -25,6 +29,7 @@
 		console.log('error retreiving materials');
 	    })
 
+	// changes the current material
 	$scope.editCurrentMaterial = function(item) {
 	    $scope.currentMaterial = item;
 	    $scope.expression = "testing"+$scope.currentMaterial.name;
@@ -44,10 +49,20 @@
 	    console.log("current material = "+$scope.currentMaterial.name);
 	}
 
+	// sets current material colors
+	$scope.currentClass= function(name){
+	    if(name == $scope.currentMaterial.name)
+		return "btn-success";
+	    else
+		return "btn-primary";
+	}
+
+	// define the primary drude-lorentz model formula for mathjax
 	$scope.drudelorentz = "\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 - i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}";
 
     });
 
+    // define the plot controller (maybe merge with the primary controller?) 
     app.controller('plotController', function($scope, $http){
 	$scope.plot = [
 	    { 'wmin' : 2,
@@ -65,6 +80,7 @@
 	    })
     });
 
+    // latex/mathjax directive
     app.directive("mathjaxBind", function() {
 	return {
             restrict: "A",
@@ -79,9 +95,5 @@
             }]
 	};
     });
-
-    app.directive('materialParameters',function(){});
-
-    app.directive('plot',function(){});
 
 })();
