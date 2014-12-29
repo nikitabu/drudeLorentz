@@ -1,0 +1,63 @@
+extends layout
+
+block input
+
+    .panel.panel-default
+      .panel-heading
+        h2 Select Material
+      .panel-body
+        .btn-group
+          ul(class="list-inline")
+            li(ng-repeat='material in materials')
+              button(class="btn btn-primary", ng-class='currentClass(material.name)', ng-click="editCurrentMaterial(material);", type="submit")
+                {{material.name}}
+
+block output
+
+    .panel.panel-default
+      .panel-heading
+        h2 Edit 
+      .panel-body
+          form(name="addMaterial", method="post", action="/addmaterial", class="form-horizontal")
+            div.form-group
+              label.col-sm-6.control-label(for="form_name") Material Name
+              .col-sm-6
+                input#form_name.form-control(type="text", placeholder="Au", name="materialname")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_eps0") Dielectric Constant
+              .col-sm-6
+                input#form_eps0.form-control(type="number", placeholder="10", name="eps0")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_meff") Effective Mass
+              .col-sm-6
+                input#form_meff.form-control(type="number", placeholder="0.1", name="meff")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_g0") Drude Damping (eV)
+              .col-sm-6
+                input#form_g0.form-control(type="number", placeholder="1", name="g0")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_w1") Lorentz Resonant Frequency #1 (eV)
+              .col-sm-6
+                input#form_w1.form-control(type="number", placeholder="1", name="w1")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_g1") Lorentz Damping Rate #1 (eV)
+              .col-sm-6
+                input#form_g1.form-control(type="number", placeholder="1", name="g1")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_f1") Lorentz Scattering Amplitude #1 (eV)
+              .col-sm-6
+                input#form_f1.form-control(type="number", placeholder="1", name="f1")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_w2") Lorentz Resonant Frequency #2 (eV)
+              .col-sm-6
+                input#form_w2.form-control(type="number", placeholder="2", name="w2")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_g2") Lorentz Damping Rate #2 (eV)
+              .col-sm-6
+                input#form_g2.form-control(type="number", placeholder="2", name="g2")     
+            div.form-group
+              label.col-sm-6.control-label(for="form_f2") Lorentz Scattering Amplitude #2 (eV)
+              .col-sm-6
+                input#form_f2.form-control(type="number", placeholder="2", name="f2")     
+            button.btn.btn-primary(type="submit") Submit  
+            a.btn.btn-danger(type="submit", href="#") Delete  
