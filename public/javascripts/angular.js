@@ -46,7 +46,15 @@
 	    $scope.g2 = "\gamma_2 = " + $scope.currentMaterial.g2;
 	    $scope.w2 = "\omega_2 = " + $scope.currentMaterial.w2;
 
-	    console.log("current material = "+$scope.currentMaterial.name);
+	    console.log("current material name = " + $scope.currentMaterial.name);
+	    console.log("current material id = " + $scope.currentMaterial._id);
+	}
+
+	$scope.deleteCurrentMaterial = function() {
+	    console.log("executing delete material code");
+	    $http.delete('/deletematerial/' + $scope.currentMaterial.name).
+		success(function(){console.log("deleted material")}).
+		error(function(){console.log("error deleting material")});
 	}
 
 	// sets current material colors
@@ -76,7 +84,7 @@
 		 $scope.plot = data;
 	     })
 	    .error( function(data, status, headers, config){
-		console.log('error retreiving plot parameters');
+		 console.log('error retreiving plot parameters');
 	    })
     });
 

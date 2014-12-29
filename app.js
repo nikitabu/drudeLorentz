@@ -14,6 +14,8 @@ var material = require('./routes/material');
 
 var app = express();
 
+//var angularmodel = require('./models/angular.js');
+
 // var database = require('./public/javascript/database');
 
 // view engine setup
@@ -29,8 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req,res,next){
-    req.db = db;
-    next();
+    req.db = db;  //add the database object to every request
+    next();       //execute the next line serially
 });
 
 app.use('/', routes);
@@ -94,29 +96,6 @@ var materialSchema = new Schema({
 });
 
 var material = mongoose.model('material', materialSchema)
-
-var Au = new material({
-    name : 'Au',
-    eps0 : 11.7,
-    meff : 0.1,
-    g0 : 0,
-    f1 : 1,
-    w1 : 1,
-    g1 : 1,
-    f2 : 2,
-    w2 : 2,
-    g2 : 2,
-    f3 : 3,
-    w3 : 3,
-    g3 : 3,
-});
-
-console.log(Au.name);
-
-//Au.save(function (err, Au) {
-//    if (err) return console.error(err);
-//    console.log('saved Au to database');
-//});
 
 app.get('/material', function(req, res) {
     mongoose.model('material').find(function(err, material) {
