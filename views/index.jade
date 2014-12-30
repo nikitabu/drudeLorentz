@@ -43,12 +43,12 @@ block input
       .panel-body
         div.input-group
           span.input-group-addon Minimum Wavelength
-          input.form-control(name='wmin', placeholder='0.3')
+          input.form-control(type='text', name='wmin', placeholder='0.3', ng-model='wmin') 
         br
         div.input-group
           span.input-group-addon Maximum Wavelength
-          input.form-control(name='wmin', placeholder='2')
-
+          input.form-control(type='text', name='wmax', placeholder='2', ng-model='wmax') 
+          
 block output
   .panel.panel-default
     .panel-heading
