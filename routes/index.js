@@ -66,7 +66,7 @@ router.post('/addmaterial', function(req, res) {
             // If it worked, set the header so the address bar doesn't still say /adduser
             //res.location("material");
             // And forward to success page
-            res.redirect("/");
+            res.redirect("/editmaterials");
         }
     });
 });
@@ -92,10 +92,6 @@ router.delete('/deletematerial/:name', function(req, res) {
             res.send("There was a problem deleting the information from the database.");
         }
         else {
-	    console.log('deleted material');
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            //res.location("material");
-            // And forward to success page
         }
     });
 });

@@ -4,8 +4,13 @@
 
     // define primary app controller
     app.controller('materialController', function($scope, $http){
+
 	// initialize materials object to null
 	$scope.materials = null;
+
+	// initialize min/max plot parameters
+	$scope.wmin = 0.3;
+	$scope.wmax = 1.55;
 
 	// fill the materials object with an async GET request for a JSON object (from the database)
 	$http.get('/material')
@@ -50,11 +55,16 @@
 	    console.log("current material id = " + $scope.currentMaterial._id);
 	}
 
+	// deletes the current material from both the database and the angular model
 	$scope.deleteCurrentMaterial = function() {
-	    console.log("executing delete material code");
+	    // delete from database
 	    $http.delete('/deletematerial/' + $scope.currentMaterial.name).
-		success(function(){console.log("deleted material")}).
+		success(function(){
+		    console.log("deleted material")
+		}).
 		error(function(){console.log("error deleting material")});
+	    // delete from angular (FIX, if there was an error removing from the db, the material will still be removed from angular!)
+	    $scope.materials.splice($scope.materials.indexOf($scope.currentMaterial), 1);
 	}
 
 	// sets current material colors
@@ -68,24 +78,6 @@
 	// define the primary drude-lorentz model formula for mathjax
 	$scope.drudelorentz = "\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 - i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}";
 
-    });
-
-    // define the plot controller (maybe merge with the primary controller?) 
-    app.controller('plotController', function($scope, $http){
-	$scope.plot = [
-	    { 'wmin' : 2,
-	      'wmax' : 16,
-	      'parameter' : n // n = refractive index, e = permittivity
-	    }
-	];
-
-	$http.get('/plotparameters')
-	     .success( function(data) {
-		 $scope.plot = data;
-	     })
-	    .error( function(data, status, headers, config){
-		 console.log('error retreiving plot parameters');
-	    })
     });
 
     // latex/mathjax directive
