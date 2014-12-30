@@ -19,7 +19,7 @@
 		 $scope.currentMaterial = data[0];
 
 		 $scope.name = "\mathrm{Material: }" + $scope.currentMaterial.name;
-		 $scope.eps0 = "\epsilon_0 = " + $scope.currentMaterial.eps0;
+		 $scope.eps = "\epsilon_\infty = " + $scope.currentMaterial.eps;
 		 $scope.meff = "m^{*} = " + $scope.currentMaterial.meff;
 		 $scope.f0 = "f_0 = " + $scope.currentMaterial.f0;
 		 $scope.g0 = "\gamma_0 = " + $scope.currentMaterial.g0;
@@ -29,6 +29,15 @@
 		 $scope.f2 = "f_2 = " + $scope.currentMaterial.f2;
 		 $scope.g2 = "\gamma_2 = " + $scope.currentMaterial.g2;
 		 $scope.w2 = "\omega_2 = " + $scope.currentMaterial.w2;
+		 $scope.f3 = "f_3 = " + $scope.currentMaterial.f3;
+		 $scope.g3 = "\gamma_3 = " + $scope.currentMaterial.g3;
+		 $scope.w3 = "\omega_3 = " + $scope.currentMaterial.w3;
+		 $scope.f4 = "f_4 = " + $scope.currentMaterial.f4;
+		 $scope.g4 = "\gamma_4 = " + $scope.currentMaterial.g4;
+		 $scope.w4 = "\omega_4 = " + $scope.currentMaterial.w4;
+		 $scope.f5 = "f_5 = " + $scope.currentMaterial.f5;
+		 $scope.g5 = "\gamma_5 = " + $scope.currentMaterial.g5;
+		 $scope.w5 = "\omega_5 = " + $scope.currentMaterial.w5;
 	     })
 	    .error( function(data, status, headers, config){
 		console.log('error retreiving materials');
@@ -40,7 +49,7 @@
 	    $scope.expression = "testing"+$scope.currentMaterial.name;
 
 	    $scope.name = "\mathrm{Material: }" + $scope.currentMaterial.name;
-	    $scope.eps0 = "\epsilon_0 = " + $scope.currentMaterial.eps0;
+	    $scope.eps = "\epsilon_\infty = " + $scope.currentMaterial.eps;
 	    $scope.meff = "m^{*} = " + $scope.currentMaterial.meff;
 	    $scope.f0 = "f_0 = " + $scope.currentMaterial.f0;
 	    $scope.g0 = "\gamma_0 = " + $scope.currentMaterial.g0;
@@ -50,6 +59,15 @@
 	    $scope.f2 = "f_2 = " + $scope.currentMaterial.f2;
 	    $scope.g2 = "\gamma_2 = " + $scope.currentMaterial.g2;
 	    $scope.w2 = "\omega_2 = " + $scope.currentMaterial.w2;
+            $scope.f3 = "f_3 = " + $scope.currentMaterial.f3;
+	    $scope.g3 = "\gamma_3 = " + $scope.currentMaterial.g3;
+	    $scope.w3 = "\omega_3 = " + $scope.currentMaterial.w3;
+	    $scope.f4 = "f_4 = " + $scope.currentMaterial.f4;
+	    $scope.g4 = "\gamma_4 = " + $scope.currentMaterial.g4;
+	    $scope.w4 = "\omega_4 = " + $scope.currentMaterial.w4;
+	    $scope.f5 = "f_5 = " + $scope.currentMaterial.f5;
+	    $scope.g5 = "\gamma_5 = " + $scope.currentMaterial.g5;
+	    $scope.w5 = "\omega_5 = " + $scope.currentMaterial.w5;
 
 	    console.log("current material name = " + $scope.currentMaterial.name);
 	    console.log("current material id = " + $scope.currentMaterial._id);

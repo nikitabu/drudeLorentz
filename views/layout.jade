@@ -29,18 +29,20 @@ html(ng-app="drudeLorentzApp")
 
   body(ng-controller='materialController')
 
-    div.container
-      div.row
-        .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
-          .container
-            .navbar-header
-              .navbar-brand
-                h1
-                  a(href="/")
-                    b Drude-Lorentz Model
-                  span(class="glyphicons glyphicons-brightness-increase")
-      div.row
-        div.col-md-6
-          block input
-        div.col-md-6
-          block output
+    div(ng-controller='materialController')
+
+      div.container
+        div.row
+          .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
+            .container
+              .navbar-header
+                .navbar-brand
+                  h1
+                    a(href="/")
+                      b Drude-Lorentz Model
+                    span(class="glyphicons glyphicons-brightness-increase")
+        div.row
+          div.col-md-6
+            block input
+          div.col-md-6
+            block output

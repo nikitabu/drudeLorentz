@@ -81,8 +81,9 @@ var Schema = mongoose.Schema;
 
 var materialSchema = new Schema({
     name : String,
-    eps0 : Number,
+    eps : Number,
     meff : Number,
+    f0 : Number,
     g0 : Number,
     f1 : Number,
     w1 : Number,
@@ -93,6 +94,12 @@ var materialSchema = new Schema({
     f3 : Number,
     w3 : Number,
     g3 : Number,
+    f4 : Number,
+    w4 : Number,
+    g4 : Number,
+    f5 : Number,
+    w5 : Number,
+    g5 : Number,
 });
 
 var material = mongoose.model('material', materialSchema)

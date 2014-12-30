@@ -2,8 +2,6 @@ extends layout
 
 block input
 
-  div(ng-controller='materialController')
-
     .panel.panel-default
       .panel-heading
          h2 Materials
@@ -26,9 +24,11 @@ block input
           tr
             $$\epsilon = \epsilon_{\infty} - \frac{f_0 \cdot \omega_p^2}{\omega^2 - i \omega \gamma} + \sum_j \frac{f_j \cdot \omega_{p}^2}{\omega_j^2 - \omega^2 + i \omega \gamma_j}$$  
           tr
-            td $\epsilon_0 = $#[span(mathjax-bind="currentMaterial.eps0")]
+            td $\epsilon_\infty = $#[span(mathjax-bind="currentMaterial.eps0")]
             td $m^* = $#[span(mathjax-bind="currentMaterial.meff")]
-            td $\gamma_0 = $#[span(mathjax-bind="currentMaterial.g0")]
+          tr
+            td $f_0 = $#[span(mathjax-bind="currentMaterial.f0")]
+            td $\gamma_0 = $#[span(mathjax-bind="currentMaterial.g0")]      
           tr
             td $f_1 = $#[span(mathjax-bind="currentMaterial.f1")]
             td $\omega_1 = $#[span(mathjax-bind="currentMaterial.w1")]
@@ -37,21 +37,26 @@ block input
             td $f_2 = $#[span(mathjax-bind="currentMaterial.f2")]
             td $\omega_2 = $#[span(mathjax-bind="currentMaterial.w2")]
             td $\gamma_2 = $#[span(mathjax-bind="currentMaterial.g2")]
-    .panel.panel-default
-      .panel-heading
-        h2 Wavelength Limits
-      .panel-body
-        div.input-group
-          span.input-group-addon Minimum Wavelength
-          input.form-control(type='text', name='wmin', placeholder='0.3', ng-model='wmin') 
-        br
-        div.input-group
-          span.input-group-addon Maximum Wavelength
-          input.form-control(type='text', name='wmax', placeholder='2', ng-model='wmax') 
-          
+          tr
+            td $f_3 = $#[span(mathjax-bind="currentMaterial.f3")]
+            td $\omega_3 = $#[span(mathjax-bind="currentMaterial.w3")]
+            td $\gamma_3 = $#[span(mathjax-bind="currentMaterial.g3")]
+          tr
+            td $f_4 = $#[span(mathjax-bind="currentMaterial.f4")]
+            td $\omega_4 = $#[span(mathjax-bind="currentMaterial.w4")]
+            td $\gamma_4 = $#[span(mathjax-bind="currentMaterial.g4")]
+          tr
+            td $f_5 = $#[span(mathjax-bind="currentMaterial.f5")]
+            td $\omega_5 = $#[span(mathjax-bind="currentMaterial.w5")]
+            td $\gamma_5 = $#[span(mathjax-bind="currentMaterial.g5")]          
 block output
   .panel.panel-default
-    .panel-heading
-      h2 Plot
     .panel-body
       svg#plot(width="550",height="400")
+      div.input-group
+        span.input-group-addon Minimum Wavelength
+        input.form-control(type='text', name='wmin', placeholder='0.3', ng-model='wmin') 
+      br
+      div.input-group
+        span.input-group-addon Maximum Wavelength
+        input.form-control(type='text', name='wmax', placeholder='2', ng-model='wmax') 
