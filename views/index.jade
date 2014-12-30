@@ -24,7 +24,7 @@ block input
       .panel-body(ng-model='currentMaterial')  
         table.table.table-hover.table-condensed
           tr
-            $$\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 -\ i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}$$  
+            $$\epsilon = \epsilon_{\infty} - \frac{f_0 \cdot \omega_p^2}{\omega^2 - i \omega \gamma} + \sum_j \frac{f_j \cdot \omega_{p}^2}{\omega_j^2 - \omega^2 + i \omega \gamma_j}$$  
           tr
             td $\epsilon_0 = $#[span(mathjax-bind="currentMaterial.eps0")]
             td $m^* = $#[span(mathjax-bind="currentMaterial.meff")]
