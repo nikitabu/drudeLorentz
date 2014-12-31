@@ -11,6 +11,8 @@ block input
             li(ng-repeat='material in materials')
               button(class="btn btn-primary", ng-class='currentClass(material.name)', ng-click="editCurrentMaterial(material);", type="submit")
                 {{material.name}}
+            li
+              button(class="btn btn-warning", type="submit") New
 
 block output
 
