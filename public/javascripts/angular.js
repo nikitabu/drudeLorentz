@@ -12,6 +12,9 @@
 	$scope.wmin = 0.3;
 	$scope.wmax = 1.55;
 
+	// initialize new/old material indicator for edit material service
+	$scope.newMaterial = false;
+
 	// fill the materials object with an async GET request for a JSON object (from the database)
 	$http.get('/material')
 	     .success( function(data) {
@@ -24,7 +27,7 @@
 		 $scope.f0 = "f_0 = " + $scope.currentMaterial.f0;
 		 $scope.g0 = "\gamma_0 = " + $scope.currentMaterial.g0;
 		 $scope.f1 = "f_1 = " + $scope.currentMaterial.f1;
-		 $scope.g1 = "\gamma_1 = " + $scope.currentMaterial.g1e;
+		 $scope.g1 = "\gamma_1 = " + $scope.currentMaterial.g1;
 		 $scope.w1 = "\omega_1 = " + $scope.currentMaterial.w1;
 		 $scope.f2 = "f_2 = " + $scope.currentMaterial.f2;
 		 $scope.g2 = "\gamma_2 = " + $scope.currentMaterial.g2;
@@ -45,6 +48,8 @@
 
 	// changes the current material
 	$scope.editCurrentMaterial = function(item) {
+	    $scope.newMaterial = false;
+
 	    $scope.currentMaterial = item;
 	    $scope.expression = "testing"+$scope.currentMaterial.name;
 
@@ -71,6 +76,10 @@
 
 	    console.log("current material name = " + $scope.currentMaterial.name);
 	    console.log("current material id = " + $scope.currentMaterial._id);
+	}
+
+	$scope.createNewMaterial = function() {
+	    $scope.newMaterial = true;
 	}
 
 	// deletes the current material from both the database and the angular model
