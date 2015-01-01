@@ -11,8 +11,6 @@ block input
             li(ng-repeat='material in materials')
               button(class="btn btn-primary", ng-class='currentClass(material.name)', ng-click="editCurrentMaterial(material);", type="submit")
                 {{material.name}}
-            li
-              button(class="btn btn-warning", type="submit", ng-click="createNewMaterial()") New
 
 block output
 
@@ -116,8 +114,6 @@ block output
                 input#form_f5.form-control(type="number", placeholder="0", name="f5", ng-model='currentMaterial.f5', required)     
             br
 
-            div(ng-switch on="newMaterial")
-                button.btn.btn-primary(type="submit", ng-disabled="materialForm.$invalid", ng-switch-when="false") Update  
-                a.btn.btn-danger(type="submit", href="#", ng-click="deleteCurrentMaterial();", ng-switch-when="false") Delete  
-                button.btn.btn-primary(type="submit", ng-disabled="materialForm.$invalid", ng-switch-when="true") Add         
+            button.btn.btn-primary(type="submit", ng-disabled="materialForm.$invalid") Update  
+            a.btn.btn-danger(type="submit", href="#", ng-click="deleteCurrentMaterial();") Delete  
                 
