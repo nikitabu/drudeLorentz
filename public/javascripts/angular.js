@@ -2,6 +2,62 @@
     // initialize angularjs module
     var app = angular.module('drudeLorentzApp', []);
 
+    /* initialize d3 factory
+    angular.module('d3', [])
+	.factory('d3Service', [function(){
+	    var d3;
+	    // d3 code here
+	    return d3;
+	}];
+    */
+
+    angular.module('d3', [])
+	.factory('d3Service', ['$document', '$q', '$rootScope',
+		function($document, $q, $rootScope) {
+		    var d = $q.defer();
+		    function onScriptLoad() {
+			// Load client in the browser
+			$rootScope.$apply(function() { d.resolve(window.d3); });
+		    }
+		    // Create a script tag with d3 as the source
+		    // and call our onScriptLoad callback when it
+		    // has been loaded
+		    var scriptTag = $document[0].createElement('script');
+		    scriptTag.type = 'text/javascript'; 
+		    scriptTag.async = true;
+		    scriptTag.src = 'http://d3js.org/d3.v3.min.js';
+		    scriptTag.onreadystatechange = function () {
+			if (this.readyState == 'complete') onScriptLoad();
+		    }
+		    scriptTag.onload = onScriptLoad;
+		    var s = $document[0].getElementsByTagName('body')[0];
+		    s.appendChild(scriptTag);
+		    return {
+			d3: function() { return d.promise; }
+		    };
+		}]);
+
+    // plotting directive
+    angular.module('app.directives', ['d3'])
+	.directive('chart', ['d3Service', function(d3Service) {
+	    return {
+		restrict: 'E',
+		require : '^ngModel', //bind directive to ng-model's controller
+		scope : true, //create new scope for directive, to prevent from modifying parent scope variables
+		link : function($scope) {
+		    // generate plot?
+		}
+	    }
+	}]);		 
+
+    // plotting directive
+    app.directive("plotGraph", function () {
+	return {
+	   restrict : "E",
+	}
+    });
+
+
     // define primary app controller
     app.controller('materialController', function($scope, $http){
 
@@ -48,11 +104,13 @@
 
 	// changes the current material
 	$scope.editCurrentMaterial = function(item) {
+	    // not adding a new material
 	    $scope.newMaterial = false;
 
+	    // set current material
 	    $scope.currentMaterial = item;
-	    $scope.expression = "testing"+$scope.currentMaterial.name;
-
+	    
+	    // update latex
 	    $scope.name = "\mathrm{Material: }" + $scope.currentMaterial.name;
 	    $scope.eps = "\epsilon_\infty = " + $scope.currentMaterial.eps;
 	    $scope.meff = "m^{*} = " + $scope.currentMaterial.meff;
@@ -73,13 +131,32 @@
 	    $scope.f5 = "f_5 = " + $scope.currentMaterial.f5;
 	    $scope.g5 = "\gamma_5 = " + $scope.currentMaterial.g5;
 	    $scope.w5 = "\omega_5 = " + $scope.currentMaterial.w5;
-
-	    console.log("current material name = " + $scope.currentMaterial.name);
-	    console.log("current material id = " + $scope.currentMaterial._id);
 	}
 
 	$scope.createNewMaterial = function() {
 	    $scope.newMaterial = true;
+
+	    $scope.currentMaterial.name = "New";
+	    $scope.currentMaterial.eps = 0;
+	    $scope.currentMaterial.meff = 0;
+	    $scope.currentMaterial.f0 = 0;
+	    $scope.currentMaterial.g0 = 0;
+	    $scope.currentMaterial.f1 = 0;
+	    $scope.currentMaterial.g1e = 0;
+	    $scope.currentMaterial.w1 = 0;
+	    $scope.currentMaterial.f2 = 0;
+	    $scope.currentMaterial.g2 = 0;
+	    $scope.currentMaterial.w2 = 0;
+            $scope.currentMaterial.f3 = 0;
+	    $scope.currentMaterial.g3 = 0;
+	    $scope.currentMaterial.w3 = 0;
+	    $scope.currentMaterial.f4 = 0;
+	    $scope.currentMaterial.g4 = 0;
+	    $scope.currentMaterial.w4 = 0;
+	    $scope.currentMaterial.f5 = 0;
+	    $scope.currentMaterial.g5 = 0;
+	    $scope.currentMaterial.w5 = 0;
+
 	}
 
 	// deletes the current material from both the database and the angular model
@@ -110,8 +187,8 @@
     // latex/mathjax directive
     app.directive("mathjaxBind", function() {
 	return {
-            restrict: "A",
-            controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+            restrict : "A",
+            controller : ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 		$scope.$watch($attrs.mathjaxBind, function(value) {
                     var $script = angular.element("<script type='math/tex'>")
 			.html(value == undefined ? "" : value);
