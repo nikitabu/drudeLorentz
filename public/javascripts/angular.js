@@ -2,15 +2,6 @@
     // initialize angularjs module
     var app = angular.module('drudeLorentzApp', []);
 
-    /* initialize d3 factory
-    angular.module('d3', [])
-	.factory('d3Service', [function(){
-	    var d3;
-	    // d3 code here
-	    return d3;
-	}];
-    */
-
     angular.module('d3', [])
 	.factory('d3Service', ['$document', '$q', '$rootScope',
 		function($document, $q, $rootScope) {
@@ -46,6 +37,7 @@
 		scope : true, //create new scope for directive, to prevent from modifying parent scope variables
 		link : function($scope) {
 		    // generate plot?
+		    console.log("running chart directive in link");
 		}
 	    }
 	}]);		 
@@ -54,6 +46,9 @@
     app.directive("plotGraph", function () {
 	return {
 	   restrict : "E",
+	   link : function($scope, el) {
+	       d3.select(el[0]).append('svg');
+	   } 
 	}
     });
 
