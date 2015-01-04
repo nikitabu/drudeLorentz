@@ -8,12 +8,25 @@ a {
   color: #00B7FF;
 }
 
+a:visited { 
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
 .navbar-nav > li > a {
   padding-top:5px !important; padding-bottom:5px !important;
 }
 
 .navbar-brand {
   padding: 5px 5px;
+}
+
+.navbar-default {
+  background-color: #6C6DD5;
 }
 
 h1 {
@@ -49,4 +62,8 @@ h2 {
 
 .MathJax_Display {
   margin: 18px 5px; 
+}
+
+svg {
+  margin-bottom: 25px;
 }
