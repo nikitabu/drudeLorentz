@@ -1,46 +1,7 @@
 (function(){
+
     // initialize angularjs module
     var app = angular.module('drudeLorentzApp', []);
-
-    angular.module('d3', [])
-	.factory('d3Service', ['$document', '$q', '$rootScope',
-		function($document, $q, $rootScope) {
-		    var d = $q.defer();
-		    function onScriptLoad() {
-			// Load client in the browser
-			$rootScope.$apply(function() { d.resolve(window.d3); });
-		    }
-		    // Create a script tag with d3 as the source
-		    // and call our onScriptLoad callback when it
-		    // has been loaded
-		    var scriptTag = $document[0].createElement('script');
-		    scriptTag.type = 'text/javascript'; 
-		    scriptTag.async = true;
-		    scriptTag.src = 'http://d3js.org/d3.v3.min.js';
-		    scriptTag.onreadystatechange = function () {
-			if (this.readyState == 'complete') onScriptLoad();
-		    }
-		    scriptTag.onload = onScriptLoad;
-		    var s = $document[0].getElementsByTagName('body')[0];
-		    s.appendChild(scriptTag);
-		    return {
-			d3: function() { return d.promise; }
-		    };
-		}]);
-
-    // plotting directive
-    angular.module('app.directives', ['d3'])
-	.directive('chart', ['d3Service', function(d3Service) {
-	    return {
-		restrict: 'E',
-		require : '^ngModel', //bind directive to ng-model's controller
-		scope : true, //create new scope for directive, to prevent from modifying parent scope variables
-		link : function($scope) {
-		    // generate plot?
-		    console.log("running chart directive in link");
-		}
-	    }
-	}]);		 
 
     // plotting directive
     app.directive("plotGraph", function () {
@@ -50,22 +11,22 @@
 	       var vis = d3.select(el[0]).append('svg');
 
 	       var lineData = [{
-		       'x': 1,
+		       'x': $scope.wmin,
 		       'y': 5
 	       }, {
-		   'x': 20,
+		   'x': 0.4,
 		   'y': 20
 	       }, {
-		   'x': 40,
+		   'x': 0.5,
 		   'y': 10
 	       }, {
-		   'x': 60,
+		   'x': 0.6,
 		   'y': 40
 	       }, {
-		   'x': 80,
+		   'x': 1,
 		   'y': 5
 	       }, {
-		   'x': 100,
+		   'x': $scope.wmax,
 		   'y': 60
 	       }];
 

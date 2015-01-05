@@ -52,7 +52,7 @@ block input
 block output
   .panel.panel-default
     .panel-body
-      svg#plot(width="550",height="400")
+      plot-graph
       div.input-group
         span.input-group-addon Minimum Wavelength
         input.form-control(type='text', name='wmin', placeholder='0.3', ng-model='wmin') 
@@ -60,5 +60,3 @@ block output
       div.input-group
         span.input-group-addon Maximum Wavelength
         input.form-control(type='text', name='wmax', placeholder='2', ng-model='wmax') 
-      chart
-      plot-graph
