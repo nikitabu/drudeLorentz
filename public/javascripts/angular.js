@@ -11,8 +11,8 @@
 
 	    var lineData = [
 		{
-		       'x': $scope.wmin,
-		       'y': 5
+               	   'x': $scope.wmin,
+		   'y': 5
 		}, {
 		   'x': 0.4,
 		   'y': 20
@@ -96,12 +96,11 @@
     	       var watchCallback = function(){
 		   console.log("triggered watch callback");
 	       }
-	
-	       $scope.$watch($scope.wmin, watchCallback());
-	       $scope.$watch($scope.wmax, watchCallback());
-	       $scope.$watch($scope.currentMaterial, watchCallback());
-
-	       }
+	       
+	       $scope.$watch('wmin', function(){console.log($scope.wmin)});
+	       $scope.$watch('wmax', function(){console.log($scope.wmax)});
+	       $scope.$watch('currentMaterial', function(){console.log($scope.currentMaterial)});
+	}
 
 	return {
 	   restrict : "E",
