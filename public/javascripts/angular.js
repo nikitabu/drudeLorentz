@@ -4,28 +4,28 @@
     var app = angular.module('drudeLorentzApp', []);
 
     // plotting directive
-    app.directive("plotGraph", function () {
-	return {
-	   restrict : "E",
-	   link : function($scope, el) {
-	       var vis = d3.select(el[0]).append('svg');
+    app.directive("plotGraph", function() {
 
-	       var lineData = [{
+	var link = function($scope,el) {
+	    var vis = d3.select(el[0]).append('svg');
+
+	    var lineData = [
+		{
 		       'x': $scope.wmin,
 		       'y': 5
-	       }, {
+		}, {
 		   'x': 0.4,
 		   'y': 20
-	       }, {
+		}, {
 		   'x': 0.5,
 		   'y': 10
-	       }, {
+		}, {
 		   'x': 0.6,
 		   'y': 40
-	       }, {
+		}, {
 		   'x': 1,
 		   'y': 5
-	       }, {
+		}, {
 		   'x': $scope.wmax,
 		   'y': 60
 	       }];
@@ -91,8 +91,21 @@
 		   .attr("stroke-width", 2)
 		   .attr("fill", "none");
 
-	       vis.append("div");
-	   } 
+	       vis.append("div"); 
+
+    	       var watchCallback = function(){
+		   console.log("triggered watch callback");
+	       }
+	
+	       $scope.$watch($scope.wmin, watchCallback());
+	       $scope.$watch($scope.wmax, watchCallback());
+	       $scope.$watch($scope.currentMaterial, watchCallback());
+
+	       }
+
+	return {
+	   restrict : "E",
+	   link : link	       
 	}
     });
 
