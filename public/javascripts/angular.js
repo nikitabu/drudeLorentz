@@ -20,46 +20,46 @@
 		{  'x': $scope.wmax,'y': 60 }];
 
 	    //define plot extents
-	    WIDTH = 550,
+	    WIDTH = 600,
 	    HEIGHT = 400,
 	    MARGINS = {
 		top: 20,
 		right: 20,
 		bottom: 20,
 		left: 50
-	    },
+	    };
 
 	    // define range of x, with linear scaling
 	    xRange = d3.scale.
 		linear().
-		range([MARGINS.left, WIDTH - MARGINS.right])
-		.domain([
+		range([MARGINS.left, WIDTH - MARGINS.right]).
+		domain([
 		    d3.min(lineData, function (d) {
 			return d.x;
 		    }),
 		    d3.max(lineData, function (d) {
 			return d.x;
 		    })
-	       ]),
+	       ]);
 
 	    // define range of y, with linear scaling
 	    yRange = d3.scale.
 		linear().
-		range([HEIGHT - MARGINS.top, MARGINS.bottom])
-		.domain([
+		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
+		domain([
 		    d3.min(lineData, function (d) {
 			return d.y;
 		    }),
 		    d3.max(lineData, function (d) {
 			return d.y;
 		    })
-		]),
+		]);
 
 	    // define x axis object
 	    xAxis = d3.svg.axis()
 		.scale(xRange)
 		.tickSize(3)
-		.tickSubdivide(true),
+		.tickSubdivide(true);
 
 	    // define y axis object
 	    yAxis = d3.svg.axis()
@@ -70,16 +70,16 @@
 
 	    // append the x-axis to the svg
 	    vis.append("svg:g")
-		.attr("class", "xAxis")
+		.attr("class", "axis xAxis")
 		.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-		.call(xAxis);
+		.call(xAxis)	    
 
 	    // append the y-axis to the svg
 	    vis.append("svg:g")
-		.attr("class", "yAxis")
+		.attr("class", "axis yAxis")
 		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
-		.call(yAxis);
-
+		.call(yAxis)	    
+		
 	    // define the line object
 	    var lineFunc = d3.svg.line()
 		.x(function (d) {
@@ -95,7 +95,8 @@
 		.attr("d", lineFunc(lineData))
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
-		.attr("fill", "none");
+		.attr("fill", "none")
+		.attr("class","line");
 
 	    // not sure why this is necessary, but latex breaks if it's missing
 	    vis.append("div"); 
@@ -103,8 +104,6 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		console.log("triggered watch callback");
-
 		// define line data
 		var lineData = [
 		    {  'x': $scope.wmin, 'y': 5 }, 
@@ -114,18 +113,21 @@
 		    {  'x': 1,   'y': 5         }, 
 		    {  'x': $scope.wmax,'y': 60 }];
 
+		wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
+
 		//define plot extents
-		WIDTH = 550,
+		WIDTH = 600,
 		HEIGHT = 400,
 		MARGINS = {
 		    top: 20,
 		    right: 20,
 		    bottom: 20,
 		    left: 50
-		},
+		};
 
 		// define range of x, with linear scaling
-		xRange = d3.scale.linear().
+		xRange = d3.scale.
+		    linear().
 		    range([MARGINS.left, WIDTH - MARGINS.right]).
 		    domain([
 			d3.min(lineData, function (d) {
@@ -134,10 +136,11 @@
 			d3.max(lineData, function (d) {
 			    return d.x;
 		        })
-		    ]),
+		    ]);
 
 		// define range of y, with linear scaling
-		yRange = d3.scale.linear().
+		yRange = d3.scale.
+		    linear().
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		    domain([
 			d3.min(lineData, function (d) {
@@ -146,17 +149,21 @@
 			d3.max(lineData, function (d) {
 			    return d.y;
 		        })
-		    ]),
+		    ]);
 
 		// update x axis object
 		xAxis = d3.svg.axis()
 		    .scale(xRange)
-
+		    .tickSize(3)
+		    .tickSubdivide(true);
+	            
 		// update y axis object
 		yAxis = d3.svg.axis()
 		    .scale(yRange)
 		    .orient("left")
-		      
+		    .tickSize(3)
+		    .tickSubdivide(true);
+	            
 		// append the x-axis to the svg
 		vis.select(".xAxis")
 		    .transition().duration(1500).ease("sin-in-out")
@@ -181,6 +188,7 @@
 
 		// append the line to the svg
 		vis.select(".line")
+		    .transition().duration(1500).ease("sin-in-out")
 		    .attr("d", lineFunc(lineData))
 		    .attr("stroke", "blue")
 		    .attr("stroke-width", 2)
@@ -189,12 +197,9 @@
 	    } // end of watch callback function
 	       
 	    // declare watch functions
-	    $scope.$watch('wmin', function(){watchCallback()});
+	    $scope.$watch('wmin', function(){watchCallback()}); // need to call from inside a function() for some reason, otherwise it doesn't work
 	    $scope.$watch('wmax', function(){watchCallback()});
 	    $scope.$watch('currentMaterial', function(){watchCallback()});
-	
-	    console.log($scope.$watch);
-
 	} // end of link function
 
 	return {
