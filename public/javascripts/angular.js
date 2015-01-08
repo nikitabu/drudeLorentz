@@ -6,7 +6,8 @@
     // plotting directive
     app.directive("plotGraph", function() {
 
-	var link = function($scope,el) {
+	var link = function($scope,el) 
+	{
 	    var vis = d3.select(el[0]).append('svg');
 
 	    // define line data
@@ -18,170 +19,183 @@
 		{  'x': 1,   'y': 5         }, 
 		{  'x': $scope.wmax,'y': 60 }];
 
-	       //define plot extents
-	       WIDTH = 550,
-	       HEIGHT = 400,
-	       MARGINS = {
-		   top: 20,
-		   right: 20,
-		   bottom: 20,
-		   left: 50
-	       },
+	    //define plot extents
+	    WIDTH = 550,
+	    HEIGHT = 400,
+	    MARGINS = {
+		top: 20,
+		right: 20,
+		bottom: 20,
+		left: 50
+	    },
 
-	       // define range of x, with linear scaling
-	       xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function (d) {
-		   return d.x;
-	       }),
-		
-		d3.max(lineData, function (d) {
-		    return d.x;
-		        })
+	    // define range of x, with linear scaling
+	    xRange = d3.scale.
+		linear().
+		range([MARGINS.left, WIDTH - MARGINS.right])
+		.domain([
+		    d3.min(lineData, function (d) {
+			return d.x;
+		    }),
+		    d3.max(lineData, function (d) {
+			return d.x;
+		    })
 	       ]),
 
-	       // define range of y, with linear scaling
-	       yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function (d) {
-		   return d.y;
-	       }),
-		d3.max(lineData, function (d) {
-		   return d.y;
-		         })
+	    // define range of y, with linear scaling
+	    yRange = d3.scale.
+		linear().
+		range([HEIGHT - MARGINS.top, MARGINS.bottom])
+		.domain([
+		    d3.min(lineData, function (d) {
+			return d.y;
+		    }),
+		    d3.max(lineData, function (d) {
+			return d.y;
+		    })
 		]),
 
-	       // define x axis object
-	       xAxis = d3.svg.axis()
-		   .scale(xRange)
-		   .tickSize(3)
-		   .tickSubdivide(true),
+	    // define x axis object
+	    xAxis = d3.svg.axis()
+		.scale(xRange)
+		.tickSize(3)
+		.tickSubdivide(true),
 
-	       // define y axis object
-	       yAxis = d3.svg.axis()
-		   .scale(yRange)
-		   .tickSize(3)
-		   .orient("left")
-		   .tickSubdivide(true);
+	    // define y axis object
+	    yAxis = d3.svg.axis()
+		.scale(yRange)
+		.tickSize(3)
+		.orient("left")
+		.tickSubdivide(true);
 
-	       // append the x-axis to the svg
-	       vis.append("svg:g")
-		   .attr("class", "x axis")
-		   .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-		   .call(xAxis);
+	    // append the x-axis to the svg
+	    vis.append("svg:g")
+		.attr("class", "xAxis")
+		.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+		.call(xAxis);
 
-	       // append the y-axis to the svg
-	       vis.append("svg:g")
-		   .attr("class", "y axis")
-		   .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-		   .call(yAxis);
+	    // append the y-axis to the svg
+	    vis.append("svg:g")
+		.attr("class", "yAxis")
+		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
+		.call(yAxis);
 
-	       // define the line object
-	       var lineFunc = d3.svg.line()
-		   .x(function (d) {
-		       return xRange(d.x);
-		   })
-		   .y(function (d) {
-		       return yRange(d.y);
-		   })
-		   .interpolate('linear');
+	    // define the line object
+	    var lineFunc = d3.svg.line()
+		.x(function (d) {
+		    return xRange(d.x);
+		})
+		.y(function (d) {
+		    return yRange(d.y);
+		})
+		.interpolate('linear');
 
-	       // append the line to the svg
-	       vis.append("svg:path")
-		   .attr("d", lineFunc(lineData))
-		   .attr("stroke", "blue")
-		   .attr("stroke-width", 2)
-		   .attr("fill", "none");
+	    // append the line to the svg
+	    vis.append("svg:path")
+		.attr("d", lineFunc(lineData))
+		.attr("stroke", "blue")
+		.attr("stroke-width", 2)
+		.attr("fill", "none");
 
-	       // not sure why this is necessary, but latex breaks if it's missing
-	       vis.append("div"); 
+	    // not sure why this is necessary, but latex breaks if it's missing
+	    vis.append("div"); 
 
-	       // define the update script for watching
-    	       var watchCallback = function(){
-		   console.log("triggered watch callback");
+	    // define the update script for watching
+    	    var watchCallback = function()
+	    {
+		console.log("triggered watch callback");
 
-		   // define line data
-		   var lineData = [
-		       {  'x': $scope.wmin, 'y': 5 }, 
-		       {  'x': 0.4, 'y': 20        }, 
-		       {  'x': 0.5, 'y': 10        }, 
-		       {  'x': 0.6, 'y': 40        },
-		       {  'x': 1,   'y': 5         }, 
-		       {  'x': $scope.wmax,'y': 60 }];
+		// define line data
+		var lineData = [
+		    {  'x': $scope.wmin, 'y': 5 }, 
+		    {  'x': 0.4, 'y': 20        }, 
+		    {  'x': 0.5, 'y': 10        }, 
+		    {  'x': 0.6, 'y': 40        },
+		    {  'x': 1,   'y': 5         }, 
+		    {  'x': $scope.wmax,'y': 60 }];
 
-		   //define plot extents
-		   WIDTH = 550,
-		   HEIGHT = 400,
-		   MARGINS = {
-		       top: 20,
-		       right: 20,
-		       bottom: 20,
-		       left: 50
-		   },
+		//define plot extents
+		WIDTH = 550,
+		HEIGHT = 400,
+		MARGINS = {
+		    top: 20,
+		    right: 20,
+		    bottom: 20,
+		    left: 50
+		},
 
-		   // define range of x, with linear scaling
-		   xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function (d) {
-		       return d.x;
-		   }),									   
-		     d3.max(lineData, function (d) {
-			 return d.x;
+		// define range of x, with linear scaling
+		xRange = d3.scale.linear().
+		    range([MARGINS.left, WIDTH - MARGINS.right]).
+		    domain([
+			d3.min(lineData, function (d) {
+			    return d.x;
+			}),									   
+			d3.max(lineData, function (d) {
+			    return d.x;
 		        })
-		   ]),
+		    ]),
 
-		   // define range of y, with linear scaling
-		   yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function (d) {
-		       return d.y;
-		   }),
-		     d3.max(lineData, function (d) {
-			 return d.y;
-		         })
-		   ]),
+		// define range of y, with linear scaling
+		yRange = d3.scale.linear().
+		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
+		    domain([
+			d3.min(lineData, function (d) {
+			    return d.y;
+			}),
+			d3.max(lineData, function (d) {
+			    return d.y;
+		        })
+		    ]),
 
-		   // define x axis object
-		   xAxis = d3.svg.axis()
-		       .scale(xRange)
-		       .tickSize(3)
-		       .tickSubdivide(true),
+		// update x axis object
+		xAxis = d3.svg.axis()
+		    .scale(xRange)
 
-		   // define y axis object
-		   yAxis = d3.svg.axis()
-		       .scale(yRange)
-		       .tickSize(3)
-		       .orient("left")
-		       .tickSubdivide(true);
+		// update y axis object
+		yAxis = d3.svg.axis()
+		    .scale(yRange)
+		    .orient("left")
+		      
+		// append the x-axis to the svg
+		vis.select(".xAxis")
+		    .transition().duration(1500).ease("sin-in-out")
+		    .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+		    .call(xAxis);
 
-		   // append the x-axis to the svg
-		   vis.select(".xaxis")
-		       .transition().duration(1500).ease("sin-in-out")
-		       .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-		       .call(xAxis);
+		// append the y-axis to the svg
+		vis.selectAll(".yAxis")
+		    .transition().duration(1500).ease("sin-in-out")
+		    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+		    .call(yAxis);
 
-		   // append the y-axis to the svg
-		   vis.selectAll("yaxis")
-		       .transition().duration(1500).ease("sin-in-out")
-		       .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-		       .call(yAxis);
+		// define the line object
+		var lineFunc = d3.svg.line()
+		    .x(function (d) {
+			return xRange(d.x);
+		    })
+		    .y(function (d) {
+			return yRange(d.y);
+		    })
+		    .interpolate('linear');
 
-		   // define the line object
-		   var lineFunc = d3.svg.line()
-		       .x(function (d) {
-			   return xRange(d.x);
-		       })
-		       .y(function (d) {
-			   return yRange(d.y);
-		       })
-		       .interpolate('linear');
+		// append the line to the svg
+		vis.select(".line")
+		    .attr("d", lineFunc(lineData))
+		    .attr("stroke", "blue")
+		    .attr("stroke-width", 2)
+		    .attr("fill", "none");
 
-		   // append the line to the svg
-		   vis.select(".line")
-		       .attr("d", lineFunc(lineData))
-		       .attr("stroke", "blue")
-		       .attr("stroke-width", 2)
-		       .attr("fill", "none");
-
-	       }
+	    } // end of watch callback function
 	       
-	       // declare watch functions
-	       $scope.$watch('wmin', watchCallback());
-	       $scope.$watch('wmax', watchCallback());
-	       $scope.$watch('currentMaterial', watchCallback());
-	}
+	    // declare watch functions
+	    $scope.$watch('wmin', function(){watchCallback()});
+	    $scope.$watch('wmax', function(){watchCallback()});
+	    $scope.$watch('currentMaterial', function(){watchCallback()});
+	
+	    console.log($scope.$watch);
+
+	} // end of link function
 
 	return {
 	   restrict : "E",
