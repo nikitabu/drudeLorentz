@@ -10,14 +10,7 @@
 	{
 	    var vis = d3.select(el[0]).append('svg');
 
-	    // define line data
-	    var lineData = [
-		{  'x': $scope.wmin, 'y': 5 }, 
-		{  'x': 0.4, 'y': 20        }, 
-		{  'x': 0.5, 'y': 10        }, 
-		{  'x': 0.6, 'y': 40        },
-		{  'x': 1,   'y': 5         }, 
-		{  'x': $scope.wmax,'y': 60 }];
+	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
 
 	    //define plot extents
 	    WIDTH = 600,
@@ -34,25 +27,17 @@
 		linear().
 		range([MARGINS.left, WIDTH - MARGINS.right]).
 		domain([
-		    d3.min(lineData, function (d) {
-			return d.x;
-		    }),
-		    d3.max(lineData, function (d) {
-			return d.x;
-		    })
-	       ]);
+		    d3.min(wavelengths),
+		    d3.max(wavelengths)
+		]);
 
 	    // define range of y, with linear scaling
 	    yRange = d3.scale.
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
-		    d3.min(lineData, function (d) {
-			return d.y;
-		    }),
-		    d3.max(lineData, function (d) {
-			return d.y;
-		    })
+		    d3.min(wavelengths),
+		    d3.max(wavelengths)
 		]);
 
 	    // define x axis object
@@ -83,16 +68,16 @@
 	    // define the line object
 	    var lineFunc = d3.svg.line()
 		.x(function (d) {
-		    return xRange(d.x);
+		    return xRange(d);
 		})
 		.y(function (d) {
-		    return yRange(d.y);
+		    return yRange(d);
 		})
 		.interpolate('linear');
 
 	    // append the line to the svg
 	    vis.append("svg:path")
-		.attr("d", lineFunc(lineData))
+		.attr("d", lineFunc(wavelengths))
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
@@ -104,17 +89,7 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		// define line data
-		var lineData = [
-		    {  'x': $scope.wmin, 'y': 5 }, 
-		    {  'x': 0.4, 'y': 20        }, 
-		    {  'x': 0.5, 'y': 10        }, 
-		    {  'x': 0.6, 'y': 40        },
-		    {  'x': 1,   'y': 5         }, 
-		    {  'x': $scope.wmax,'y': 60 }];
-
-		wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
-		roots = wavelengths.map(Math.sqrt);
+		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
 
 		//define plot extents
 		WIDTH = 600,
@@ -130,13 +105,19 @@
 		xRange = d3.scale.
 		    linear().
 		    range([MARGINS.left, WIDTH - MARGINS.right]).
-		    domain([d3.min(wavelengths),d3.max(wavelengths)]);
+		    domain([
+			d3.min(wavelengths),
+			d3.max(wavelengths)
+		    ]);
 
 		// define range of y, with linear scaling
 		yRange = d3.scale.
 		    linear().
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
-		    domain([d3.min(roots),d3.max(roots)]);
+		    domain([
+			d3.min(wavelengths),
+			d3.max(wavelengths)
+		    ]);
 
 		// update x axis object
 		xAxis = d3.svg.axis()
@@ -166,17 +147,17 @@
 		// define the line object
 		var lineFunc = d3.svg.line()
 		    .x(function (d) {
-			return xRange(d.x);
+			return xRange(d);
 		    })
 		    .y(function (d) {
-			return yRange(d.y);
+			return yRange(d);
 		    })
 		    .interpolate('linear');
 
 		// append the line to the svg
 		vis.select(".line")
 		    .transition().duration(1500).ease("sin-in-out")
-		    .attr("d", lineFunc({"x":wavelengths,"y":roots}))
+		    .attr("d", lineFunc(wavelengths) )
 		    .attr("stroke", "blue")
 		    .attr("stroke-width", 2)
 		    .attr("fill", "none");
