@@ -55,10 +55,12 @@ block output
   .panel.panel-default
     .panel-body
       plot-graph
-      div.input-group
-        span.input-group-addon Minimum Wavelength
-        input.form-control(type='text', name='wmin', placeholder='0.3', ng-model='wmin') 
-      br
-      div.input-group
-        span.input-group-addon Maximum Wavelength
-        input.form-control(type='text', name='wmax', placeholder='2', ng-model='wmax')
+      form(name="plotForm", class="form-horizontal", novalidate)
+        div.form-group(ng-class="{'has-error' : plotForm.wmin.$invalid}")
+          label.col-sm-4.control-label(for="form_wmin")  Minimum Wavelength
+          div.col-sm-8
+            input.form-control(type="number", name='wmin', ng-model='wmin', required)
+        div.form-group(ng-class="{'has-error' : plotForm.wmax.$invalid}")
+          label.col-sm-4.control-label(for="form_wmax")  Maximum Wavelength
+          div.col-sm-8
+            input.form-control(type="number", name='wmax', ng-model='wmax', required)
