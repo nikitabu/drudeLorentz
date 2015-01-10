@@ -12,6 +12,10 @@
 
 	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
 
+	    var equation = function(lambda){
+		return Math.sqrt(lambda);
+	    }
+
 	    //define plot extents
 	    WIDTH = 600,
 	    HEIGHT = 400,
@@ -37,7 +41,7 @@
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
 		    d3.min(wavelengths),
-		    d3.max(wavelengths)
+		    equation(d3.max(wavelengths))
 		]);
 
 	    // define x axis object
@@ -71,7 +75,7 @@
 		    return xRange(d);
 		})
 		.y(function (d) {
-		    return yRange(d);
+		    return yRange(equation(d));
 		})
 		.interpolate('linear');
 
@@ -116,7 +120,7 @@
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		    domain([
 			d3.min(wavelengths),
-			d3.max(wavelengths)
+			equation(d3.max(wavelengths))
 		    ]);
 
 		// update x axis object
@@ -150,7 +154,7 @@
 			return xRange(d);
 		    })
 		    .y(function (d) {
-			return yRange(d);
+			return yRange(equation(d));
 		    })
 		    .interpolate('linear');
 
