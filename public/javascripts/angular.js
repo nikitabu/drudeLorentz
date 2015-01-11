@@ -13,7 +13,13 @@
 	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
 
 	    var equation = function(lambda){
-		return Math.sqrt(lambda);
+		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
+		if(typeof $scope.currentMaterial === 'undefined'){
+		    return 1;
+		}
+		else{
+		    return $scope.currentMaterial.eps;
+		}
 	    }
 
 	    //define plot extents
@@ -94,6 +100,8 @@
     	    var watchCallback = function()
 	    {
 		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
+
+		console.log($scope.currentMaterial);
 
 		//define plot extents
 		WIDTH = 600,
@@ -176,6 +184,7 @@
 
 	return {
 	   restrict : "E",
+	   scope : true,
 	   link : link	       
 	}
     });
