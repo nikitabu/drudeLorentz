@@ -3,6 +3,7 @@ html(ng-app="drudeLorentzApp")
   head
     title= "Optical Properties with the Drude-Lorentz Model"
 
+    // configure mathjax
     script(type="text/x-mathjax-config").
       MathJax.Hub.Config({
         tex2jax: {
@@ -11,6 +12,7 @@ html(ng-app="drudeLorentzApp")
         }
       });
      
+    // import mathjax
     script(src='//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js') // import angular js
@@ -20,6 +22,8 @@ html(ng-app="drudeLorentzApp")
 
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
     script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
+
+    script(src='//cdnjs.cloudflare.com/ajax/libs/mathjs/1.2.0/math.min.js')
 
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css")

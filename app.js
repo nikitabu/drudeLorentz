@@ -85,6 +85,7 @@ var materialSchema = new Schema({
     name : String,
     eps : Number,
     meff : Number,
+    wp : Number,
     f0 : Number,
     g0 : Number,
     f1 : Number,

@@ -27,6 +27,7 @@ router.post('/addmaterial', function(req, res) {
     var name = req.body.name;
     var eps = req.body.eps;
     var meff = req.body.meff;
+    var wp = req.body.wp;
     var f0 = req.body.g0;
     var g0 = req.body.g0;
     var w1 = req.body.w1;
@@ -50,6 +51,7 @@ router.post('/addmaterial', function(req, res) {
         "name" : name,
         "eps" : eps,
 	"meff" : meff,
+	"wp"   : wp,
 	"f0"   : f0,
 	"g0"   : g0,
 	"w1"   : w1,
@@ -66,7 +68,7 @@ router.post('/addmaterial', function(req, res) {
 	"f4"   : f4,
 	"w5"   : w5,
 	"g5"   : g5,
-	"f5"   : f5,
+	"f5"   : f5
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -91,6 +93,7 @@ router.post('/updatematerials', function(req, res) {
     var name = req.body.name;
     var eps = req.body.eps;
     var meff = req.body.meff;
+    var wp = req.body.wp;
     var f0 = req.body.f0;
     var g0 = req.body.g0;
     var w1 = req.body.w1;
@@ -118,6 +121,7 @@ router.post('/updatematerials', function(req, res) {
 	    "name" : name,
             "eps" : eps,
 	    "meff" : meff,
+	    "wp"   : wp,
 	    "f0"   : f0,
 	    "g0"   : g0,
 	    "w1"   : w1,

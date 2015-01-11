@@ -10,7 +10,7 @@
 	{
 	    var vis = d3.select(el[0]).append('svg');
 
-	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
+	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.05*($scope.wmax-$scope.wmin));
 
 	    var equation = function(lambda){
 		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
@@ -19,13 +19,15 @@
 		}
 		else{
 		    var scope = {
+			wc :  1.2409,
+			wp :  $scope.currentMaterial.wp,
 			eps : $scope.currentMaterial.eps,
 			f0 :  $scope.currentMaterial.f0,
 			g0 :  $scope.currentMaterial.g0,
 			lam : lambda
 		    };
 		    
-		    return math.eval('eps + 10*f0*lam',scope);
+		    return math.eval('eps - ((lam^2)*wp/1.2409)',scope);
 		}
 	    }
 
@@ -53,8 +55,8 @@
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
-		    d3.min(wavelengths),
-		    equation(d3.max(wavelengths))
+		    equation(d3.max(wavelengths)),
+		    equation(d3.min(wavelengths))
 		]);
 
 	    // define x axis object
@@ -106,7 +108,7 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
+		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.05*($scope.wmax-$scope.wmin));
 
 		//define plot extents
 		WIDTH = 600,
@@ -132,8 +134,8 @@
 		    linear().
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		    domain([
-			d3.min(wavelengths),
-			equation(d3.max(wavelengths))
+			equation(d3.max(wavelengths)),
+			equation(d3.min(wavelengths))
 		    ]);
 
 		// update x axis object
@@ -217,6 +219,7 @@
 		 $scope.name = "\mathrm{Material: }" + $scope.currentMaterial.name;
 		 $scope.eps = "\epsilon_\infty = " + $scope.currentMaterial.eps;
 		 $scope.meff = "m^{*} = " + $scope.currentMaterial.meff;
+		 $scope.wp = "\omega_p = " + $scope.currentMaterial.wp;
 		 $scope.f0 = "f_0 = " + $scope.currentMaterial.f0;
 		 $scope.g0 = "\gamma_0 = " + $scope.currentMaterial.g0;
 		 $scope.f1 = "f_1 = " + $scope.currentMaterial.f1;
@@ -251,6 +254,7 @@
 	    $scope.name = "\mathrm{Material: }" + $scope.currentMaterial.name;
 	    $scope.eps = "\epsilon_\infty = " + $scope.currentMaterial.eps;
 	    $scope.meff = "m^{*} = " + $scope.currentMaterial.meff;
+	    $scope.wp = "\omega_p = " + $scope.currentMaterial.wp;
 	    $scope.f0 = "f_0 = " + $scope.currentMaterial.f0;
 	    $scope.g0 = "\gamma_0 = " + $scope.currentMaterial.g0;
 	    $scope.f1 = "f_1 = " + $scope.currentMaterial.f1;
@@ -276,6 +280,7 @@
 	    $scope.currentMaterial.name = "New";
 	    $scope.currentMaterial.eps = 0;
 	    $scope.currentMaterial.meff = 0;
+	    $scope.currentMaterial.wp = 0;
 	    $scope.currentMaterial.f0 = 0;
 	    $scope.currentMaterial.g0 = 0;
 	    $scope.currentMaterial.f1 = 0;

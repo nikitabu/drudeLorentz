@@ -30,18 +30,26 @@ block output
               label.col-sm-6.control-label(for="form_eps") Dielectric Constant
               .col-sm-6
                 input#form_eps.form-control(type="number", placeholder="10", name="eps", ng-model='currentMaterial.eps', required)     
+
             div.form-group(ng-class="{ 'has-success' : !materialForm.meff.$invalid, 'has-error' : materialForm.meff.$invalid }")
               label.col-sm-6.control-label(for="form_meff") Effective Mass
               .col-sm-6
                 input#form_meff.form-control(type="number", placeholder="0.1", name="meff", ng-model='currentMaterial.meff', required)     
-            div.form-group(ng-class="{ 'has-success' : !materialForm.f0.$invalid, 'has-error' : materialForm.f0.$invalid }")
-              label.col-sm-6.control-label(for="form_f0") Drude Scattering Amplitude 
+
+            div.form-group(ng-class="{ 'has-success' : !materialForm.wp.$invalid, 'has-error' : materialForm.wp.$invalid }")
+              label.col-sm-6.control-label(for="form_wp") Plasma Frequency 
               .col-sm-6
-                input#form_f0.form-control(type="number", placeholder="1", name="f0", ng-model='currentMaterial.f0', required)     
+                input#form_wp.form-control(type="number", placeholder="1", name="wp", ng-model='currentMaterial.wp', required)     
+
             div.form-group(ng-class="{ 'has-success' : !materialForm.g0.$invalid, 'has-error' : materialForm.g0.$invalid }")
               label.col-sm-6.control-label(for="form_g0") Drude Damping (eV)
               .col-sm-6
                 input#form_g0.form-control(type="number", placeholder="1", name="g0", ng-model='currentMaterial.g0', required)     
+
+            div.form-group(ng-class="{ 'has-success' : !materialForm.f0.$invalid, 'has-error' : materialForm.f0.$invalid }")
+              label.col-sm-6.control-label(for="form_f0") Drude Scattering Amplitude 
+              .col-sm-6
+                input#form_f0.form-control(type="number", placeholder="1", name="f0", ng-model='currentMaterial.f0', required)     
             br
  
             div.form-group(ng-class="{ 'has-success' : !materialForm.w1.$invalid, 'has-error' : materialForm.w1.$invalid }")
