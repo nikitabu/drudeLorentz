@@ -12,6 +12,8 @@ var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var material = require('./routes/material');
 
+var math = require('mathjs');
+
 var app = express();
 
 //var angularmodel = require('./models/angular.js');

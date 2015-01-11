@@ -18,7 +18,14 @@
 		    return 1;
 		}
 		else{
-		    return $scope.currentMaterial.eps;
+		    var scope = {
+			eps : $scope.currentMaterial.eps,
+			f0 :  $scope.currentMaterial.f0,
+			g0 :  $scope.currentMaterial.g0,
+			lam : lambda
+		    };
+		    
+		    return math.eval('eps + 10*f0*lam',scope);
 		}
 	    }
 
@@ -100,8 +107,6 @@
     	    var watchCallback = function()
 	    {
 		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.1);
-
-		console.log($scope.currentMaterial);
 
 		//define plot extents
 		WIDTH = 600,
