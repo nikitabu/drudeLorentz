@@ -18,7 +18,7 @@ block output
       .panel-heading
         h2 Edit 
       .panel-body
-          form(name="materialForm", method="post", action="/addmaterial", class="form-horizontal", ng-submit="submitMaterial()", novalidate)
+          form(name="materialForm", method="post", action="/updatematerials", class="form-horizontal", novalidate)
 
             div.form-group(ng-class="{ 'has-success' : !materialForm.name.$invalid, 'has-error' : materialForm.name.$invalid }")
               label.col-sm-6.control-label(for="form_name") Material Name

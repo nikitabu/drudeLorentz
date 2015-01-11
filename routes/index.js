@@ -110,41 +110,47 @@ router.post('/updatematerials', function(req, res) {
     var f5 = req.body.f5;
 
     // Update DB
-    db.collection('materials').update({
-	_id : db.collection('materials').find({ "name" : name }).id
-        },{
-        "name" : name,
-        "eps" : eps,
-	"meff" : meff,
-	"f0"   : f0,
-	"g0"   : g0,
-	"w1"   : w1,
-	"g1"   : g1,
-	"f1"   : f1,
-	"w2"   : w2,
-	"g2"   : g2,
-	"f2"   : f2,
-	"w3"   : w3,
-	"g3"   : g3,
-	"f3"   : f3,
-	"w4"   : w4,
-	"g4"   : g4,
-	"f4"   : f4,
-	"w5"   : w5,
-	"g5"   : g5,
-	"f5"   : f5,
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
-        }
-        else {
-            // If it worked, set the header so the address bar doesn't still say /adduser
-            //res.location("material");
-            // And forward to success page
-            res.redirect("/editmaterials");
-        }
-    });
+    db.collection('materials').update(
+	{
+            "name" : name
+        },
+	{
+	    "name" : name,
+            "eps" : eps,
+	    "meff" : meff,
+	    "f0"   : f0,
+	    "g0"   : g0,
+	    "w1"   : w1,
+	    "g1"   : g1,
+	    "f1"   : f1,
+	    "w2"   : w2,
+	    "g2"   : g2,
+	    "f2"   : f2,
+	    "w3"   : w3,
+	    "g3"   : g3,
+	    "f3"   : f3,
+	    "w4"   : w4,
+	    "g4"   : g4,
+	    "f4"   : f4,
+	    "w5"   : w5,
+	    "g5"   : g5,
+	    "f5"   : f5,
+	},
+	    function(err, doc) {
+		if (err) 
+		{
+		    // If it failed, return error
+		    res.send("There was a problem adding the information to the database.");
+		}
+		else 
+		{
+		    // If it worked, set the header so the address bar doesn't still say /adduser
+		    //res.location("material");
+		    // And forward to success page
+		    res.redirect("/editmaterials");
+		}
+	    }
+        ); 
 });
 
 /* POST to Delete Material Service */
@@ -159,7 +165,7 @@ router.delete('/deletematerial/:name', function(req, res) {
 
     // Submit to the DB
     db.collection('materials').remove({
-        name : name
+        "name" : name
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
