@@ -10,9 +10,9 @@
 	{
 	    var vis = d3.select(el[0]).append('svg');
 
-	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.05*($scope.wmax-$scope.wmin));
+	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.02*($scope.wmax-$scope.wmin));
 
-	    var equation = function(lambda){
+	    var realPerm = function(lambda){
 		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
 		if(typeof $scope.currentMaterial === 'undefined'){
 		    return 1;
@@ -27,7 +27,27 @@
 			lam : lambda
 		    };
 		    
-		    return math.eval('eps - ((lam^2)*wp/1.2409)',scope);
+		    return math.eval('eps - re( f0*(wp^2)/( ((wc/lam)^2) + (i*g0*wc/lam)  ) )',scope);
+		    //return math.eval('1',scope);
+		}
+	    }
+
+	    var imagPerm = function(lambda){
+		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
+		if(typeof $scope.currentMaterial === 'undefined'){
+		    return 1;
+		}
+		else{
+		    var scope = {
+			wc :  1.2409,
+			wp :  $scope.currentMaterial.wp,
+			eps : $scope.currentMaterial.eps,
+			f0 :  $scope.currentMaterial.f0,
+			g0 :  $scope.currentMaterial.g0,
+			lam : lambda
+		    };
+
+		    return math.eval('im( f0*(wp^2)/( ((wc/lam)^2) + (i*g0*wc/lam)  ) )',scope);		    
 		}
 	    }
 
@@ -55,8 +75,8 @@
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
-		    equation(d3.max(wavelengths)),
-		    equation(d3.min(wavelengths))
+		    Math.min(realPerm(d3.max(wavelengths)),imagPerm(d3.max(wavelengths))),
+		    Math.max(realPerm(d3.min(wavelengths)),imagPerm(d3.min(wavelengths)))
 		]);
 
 	    // define x axis object
@@ -85,22 +105,38 @@
 		.call(yAxis)	    
 		
 	    // define the line object
-	    var lineFunc = d3.svg.line()
+	    var lineReal = d3.svg.line()
 		.x(function (d) {
 		    return xRange(d);
 		})
 		.y(function (d) {
-		    return yRange(equation(d));
+		    return yRange(realPerm(d));
+		})
+		.interpolate('linear');
+
+	    var lineImag = d3.svg.line()
+		.x(function (d) {
+		    return xRange(d);
+		})
+		.y(function (d) {
+		    return yRange(imagPerm(d));
 		})
 		.interpolate('linear');
 
 	    // append the line to the svg
 	    vis.append("svg:path")
-		.attr("d", lineFunc(wavelengths))
+		.attr("d", lineReal(wavelengths))
+		.attr("stroke", "orange")
+		.attr("stroke-width", 2)
+		.attr("fill", "none")
+		.attr("class","lineReal");
+
+	    vis.append("svg:path")
+		.attr("d", lineImag(wavelengths))
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
-		.attr("class","line");
+		.attr("class","lineImag");
 
 	    // not sure why this is necessary, but latex breaks if it's missing
 	    vis.append("div"); 
@@ -108,7 +144,7 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.05*($scope.wmax-$scope.wmin));
+		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.02*($scope.wmax-$scope.wmin));
 
 		//define plot extents
 		WIDTH = 600,
@@ -134,8 +170,8 @@
 		    linear().
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		    domain([
-			equation(d3.max(wavelengths)),
-			equation(d3.min(wavelengths))
+			Math.min(realPerm(d3.max(wavelengths)),imagPerm(d3.max(wavelengths))),
+			Math.max(realPerm(d3.min(wavelengths)),imagPerm(d3.min(wavelengths)))
 		    ]);
 
 		// update x axis object
@@ -164,19 +200,36 @@
 		    .call(yAxis);
 
 		// define the line object
-		var lineFunc = d3.svg.line()
+		var lineReal = d3.svg.line()
 		    .x(function (d) {
 			return xRange(d);
 		    })
 		    .y(function (d) {
-			return yRange(equation(d));
+			return yRange(realPerm(d));
+		    })
+		    .interpolate('linear');
+
+		var lineImag = d3.svg.line()
+		    .x(function (d) {
+			return xRange(d);
+		    })
+		    .y(function (d) {
+			return yRange(imagPerm(d));
 		    })
 		    .interpolate('linear');
 
 		// append the line to the svg
-		vis.select(".line")
+		vis.select(".lineReal")
 		    .transition().duration(1500).ease("sin-in-out")
-		    .attr("d", lineFunc(wavelengths) )
+		    .attr("d", lineReal(wavelengths) )
+		    .attr("stroke", "orange")
+		    .attr("stroke-width", 2)
+		    .attr("fill", "none");
+
+		// append the line to the svg
+		vis.select(".lineImag")
+		    .transition().duration(1500).ease("sin-in-out")
+		    .attr("d", lineImag(wavelengths) )
 		    .attr("stroke", "blue")
 		    .attr("stroke-width", 2)
 		    .attr("fill", "none");
