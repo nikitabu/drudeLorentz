@@ -251,7 +251,7 @@
 
 
     // define primary app controller
-    app.controller('materialController', function($scope, $http, $location){
+    app.controller('materialController', function($scope, $http, $location, $window){
 
 	// initialize materials object to null
 	$scope.materials = null;
@@ -386,7 +386,7 @@
 			 })
 		.error(function(){console.log("error adding material to db")})
 
-	    $location.path("/index");
+	    $window.location.href="/";
 
 	}
 
