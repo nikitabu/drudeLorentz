@@ -251,7 +251,7 @@
 
 
     // define primary app controller
-    app.controller('materialController', function($scope, $http){
+    app.controller('materialController', function($scope, $http, $location){
 
 	// initialize materials object to null
 	$scope.materials = null;
@@ -351,6 +351,42 @@
 	    $scope.currentMaterial.f5 = 0;
 	    $scope.currentMaterial.g5 = 0;
 	    $scope.currentMaterial.w5 = 0;
+	}
+
+	$scope.addNewMaterial = function() {
+	    console.log("adding a new material asynchronously through angular");
+
+	    $http.post('/addmaterial', 
+		       {
+			   name : $scope.currentMaterial.name,
+			   eps  : $scope.currentMaterial.eps,
+			   meff : $scope.currentMaterial.meff,
+			   wp   : $scope.currentMaterial.wp,
+			   f0 : $scope.currentMaterial.f0,
+			   g0 : $scope.currentMaterial.g0,
+			   f1 : $scope.currentMaterial.f1,
+			   g1 : $scope.currentMaterial.g1,
+			   w1 : $scope.currentMaterial.w1,
+			   f2 : $scope.currentMaterial.f2,
+			   g2 : $scope.currentMaterial.g2,
+			   w2 : $scope.currentMaterial.w2,
+			   f3 : $scope.currentMaterial.f3,
+			   g3 : $scope.currentMaterial.g3,
+			   w3 : $scope.currentMaterial.w3,
+			   f4 : $scope.currentMaterial.f4,
+			   g4 : $scope.currentMaterial.g4,
+			   w4 : $scope.currentMaterial.w4,
+			   f5 : $scope.currentMaterial.f5,
+			   g5 : $scope.currentMaterial.g5,
+			   w5 : $scope.currentMaterial.w5
+		       })
+		.success(function()
+			 {
+		    	     console.log("succesfully added material to db");
+			 })
+		.error(function(){console.log("error adding material to db")})
+
+	    $location.path("/index");
 
 	}
 
