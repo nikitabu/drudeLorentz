@@ -10,7 +10,7 @@
 	{
 	    var vis = d3.select(el[0]).append('svg');
 
-	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.001*($scope.wmax-$scope.wmin));
+	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.01*($scope.wmax-$scope.wmin));
 
 	    var realPerm = function(lambda){
 		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
@@ -42,7 +42,7 @@
 			w5 :  $scope.currentMaterial.w5
 		    };
 		    
-		    return math.eval('eps + re( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  )) )',scope);
+		    return math.eval('eps + re( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f1*(wp^2)/( (w1^2) - ((wc/lam)^2) + (i*g1*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  ))+(f3*(wp^2)/( (w3^2) - ((wc/lam)^2) + (i*g3*wc/lam)  ))+(f4*(wp^2)/( (w4^2) - ((wc/lam)^2) + (i*g4*wc/lam)  ))+(f5*(wp^2)/( (w5^2) - ((wc/lam)^2) + (i*g5*wc/lam)  )) )',scope);
 		    //return math.eval('1',scope);
 		}
 	    }
@@ -77,7 +77,7 @@
 			w5 :  $scope.currentMaterial.w5
 		    };
 
-		    return math.eval('im( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  )) )',scope);
+		    return math.eval('im( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f1*(wp^2)/( (w1^2) - ((wc/lam)^2) + (i*g1*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  ))+(f3*(wp^2)/( (w3^2) - ((wc/lam)^2) + (i*g3*wc/lam)  ))+(f4*(wp^2)/( (w4^2) - ((wc/lam)^2) + (i*g4*wc/lam)  ))+(f5*(wp^2)/( (w5^2) - ((wc/lam)^2) + (i*g5*wc/lam)  )) )',scope);
 		}
 	    }
 
@@ -105,8 +105,8 @@
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
-		    Math.min(realPerm(d3.max(wavelengths)),imagPerm(d3.max(wavelengths))),
-		    Math.max(realPerm(d3.min(wavelengths)),imagPerm(d3.min(wavelengths)))
+		    Math.min(d3.min(wavelengths,function(d){return realPerm(d)}),d3.min(wavelengths,function(d){return imagPerm(d)})),
+		    Math.max(d3.max(wavelengths,function(d){return realPerm(d)}),d3.max(wavelengths,function(d){return imagPerm(d)})),
 		]);
 
 	    // define x axis object
@@ -174,7 +174,7 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.02*($scope.wmax-$scope.wmin));
+		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.01*($scope.wmax-$scope.wmin));
 
 		//define plot extents
 		WIDTH = 600,
@@ -195,13 +195,16 @@
 			d3.max(wavelengths)
 		    ]);
 
+		real = wavelengths.map(function(d){return realPerm(d)});
+		imag = wavelengths.map(function(d){return imagPerm(d)});
+
 		// define range of y, with linear scaling
 		yRange = d3.scale.
 		    linear().
 		    range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		    domain([
-			Math.min(realPerm(d3.max(wavelengths)),imagPerm(d3.max(wavelengths))),
-			Math.max(realPerm(d3.min(wavelengths)),imagPerm(d3.min(wavelengths)))
+			Math.min(d3.min(real),d3.min(imag)),
+			Math.max(d3.max(real),d3.max(imag)),
 		    ]);
 
 		// update x axis object
@@ -231,7 +234,7 @@
 
 		// define the line object
 		var lineReal = d3.svg.line()
-		    .x(function (d) {
+		    .x(function (d,i) {
 			return xRange(d);
 		    })
 		    .y(function (d) {
@@ -240,7 +243,7 @@
 		    .interpolate('linear');
 
 		var lineImag = d3.svg.line()
-		    .x(function (d) {
+		    .x(function (d,i) {
 			return xRange(d);
 		    })
 		    .y(function (d) {
