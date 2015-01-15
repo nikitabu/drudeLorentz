@@ -10,7 +10,7 @@
 	{
 	    var vis = d3.select(el[0]).append('svg');
 
-	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.02*($scope.wmax-$scope.wmin));
+	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.001*($scope.wmax-$scope.wmin));
 
 	    var realPerm = function(lambda){
 		// check if the currentMaterial has been defined, if not return 1, otherwise proceed
@@ -19,15 +19,30 @@
 		}
 		else{
 		    var scope = {
-			wc :  1.2409,
+			lam : lambda,
+			wc :  1.24086,
 			wp :  $scope.currentMaterial.wp,
 			eps : $scope.currentMaterial.eps,
 			f0 :  $scope.currentMaterial.f0,
 			g0 :  $scope.currentMaterial.g0,
-			lam : lambda
+			f1 :  $scope.currentMaterial.f1,
+			g1 :  $scope.currentMaterial.g1,
+			w1 :  $scope.currentMaterial.w1,
+			f2 :  $scope.currentMaterial.f2,
+			g2 :  $scope.currentMaterial.g2,
+			w2 :  $scope.currentMaterial.w2,
+			f3 :  $scope.currentMaterial.f3,
+			g3 :  $scope.currentMaterial.g3,
+			w3 :  $scope.currentMaterial.w3,
+			f4 :  $scope.currentMaterial.f4,
+			g4 :  $scope.currentMaterial.g4,
+			w4 :  $scope.currentMaterial.w4,
+			f5 :  $scope.currentMaterial.f5,
+			g5 :  $scope.currentMaterial.g5,
+			w5 :  $scope.currentMaterial.w5
 		    };
 		    
-		    return math.eval('eps - re( f0*(wp^2)/( ((wc/lam)^2) + (i*g0*wc/lam)  ) )',scope);
+		    return math.eval('eps + re( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  )) )',scope);
 		    //return math.eval('1',scope);
 		}
 	    }
@@ -39,15 +54,30 @@
 		}
 		else{
 		    var scope = {
-			wc :  1.2409,
+			lam : lambda,
+			wc :  1.24086,
 			wp :  $scope.currentMaterial.wp,
 			eps : $scope.currentMaterial.eps,
 			f0 :  $scope.currentMaterial.f0,
 			g0 :  $scope.currentMaterial.g0,
-			lam : lambda
+			f1 :  $scope.currentMaterial.f1,
+			g1 :  $scope.currentMaterial.g1,
+			w1 :  $scope.currentMaterial.w1,
+			f2 :  $scope.currentMaterial.f2,
+			g2 :  $scope.currentMaterial.g2,
+			w2 :  $scope.currentMaterial.w2,
+			f3 :  $scope.currentMaterial.f3,
+			g3 :  $scope.currentMaterial.g3,
+			w3 :  $scope.currentMaterial.w3,
+			f4 :  $scope.currentMaterial.f4,
+			g4 :  $scope.currentMaterial.g4,
+			w4 :  $scope.currentMaterial.w4,
+			f5 :  $scope.currentMaterial.f5,
+			g5 :  $scope.currentMaterial.g5,
+			w5 :  $scope.currentMaterial.w5
 		    };
 
-		    return math.eval('im( f0*(wp^2)/( ((wc/lam)^2) + (i*g0*wc/lam)  ) )',scope);		    
+		    return math.eval('im( -(f0*(wp^2)/( ((wc/lam)^2) - (i*g0*wc/lam)  ))+(f2*(wp^2)/( (w2^2) - ((wc/lam)^2) + (i*g2*wc/lam)  )) )',scope);
 		}
 	    }
 
@@ -328,7 +358,7 @@
 	}
 
 	$scope.createNewMaterial = function() {
-	    $scope.newMaterial = true;
+	    console.log("creating a new material")
 
 	    $scope.currentMaterial.name = "New";
 	    $scope.currentMaterial.eps = 0;
