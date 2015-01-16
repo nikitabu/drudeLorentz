@@ -100,13 +100,16 @@
 		    d3.max(wavelengths)
 		]);
 
+	    real = wavelengths.map(function(d){return realPerm(d)});
+	    imag = wavelengths.map(function(d){return imagPerm(d)});
+
 	    // define range of y, with linear scaling
 	    yRange = d3.scale.
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
-		    Math.min(d3.min(wavelengths,function(d){return realPerm(d)}),d3.min(wavelengths,function(d){return imagPerm(d)})),
-		    Math.max(d3.max(wavelengths,function(d){return realPerm(d)}),d3.max(wavelengths,function(d){return imagPerm(d)})),
+		    Math.min(d3.min(real),d3.min(imag)),
+		    Math.max(d3.max(real),d3.max(imag)),
 		]);
 
 	    // define x axis object
@@ -133,23 +136,23 @@
 		.attr("class", "axis yAxis")
 		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
 		.call(yAxis)	    
-		
+
 	    // define the line object
 	    var lineReal = d3.svg.line()
 		.x(function (d) {
 		    return xRange(d);
 		})
-		.y(function (d) {
-		    return yRange(realPerm(d));
+		.y(function (d,i) {
+		    return yRange(real[i]);
 		})
 		.interpolate('linear');
-
+	    
 	    var lineImag = d3.svg.line()
 		.x(function (d) {
 		    return xRange(d);
 		})
-		.y(function (d) {
-		    return yRange(imagPerm(d));
+		.y(function (d,i) {
+		    return yRange(imag[i]);
 		})
 		.interpolate('linear');
 
@@ -174,7 +177,7 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.01*($scope.wmax-$scope.wmin));
+		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.005*($scope.wmax-$scope.wmin));
 
 		//define plot extents
 		WIDTH = 600,
@@ -234,20 +237,20 @@
 
 		// define the line object
 		var lineReal = d3.svg.line()
-		    .x(function (d,i) {
+		    .x(function (d) {
 			return xRange(d);
 		    })
-		    .y(function (d) {
-			return yRange(realPerm(d));
+		    .y(function (d,i) {
+			return yRange(real[i]);
 		    })
 		    .interpolate('linear');
 
 		var lineImag = d3.svg.line()
-		    .x(function (d,i) {
+		    .x(function (d) {
 			return xRange(d);
 		    })
-		    .y(function (d) {
-			return yRange(imagPerm(d));
+		    .y(function (d,i) {
+			return yRange(imag[i]);
 		    })
 		    .interpolate('linear');
 
