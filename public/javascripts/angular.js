@@ -81,9 +81,9 @@
 		}
 	    }
 
-	    //define plot extents
-	    WIDTH = 600,
-	    HEIGHT = 400,
+	    //define plot extents 
+	    WIDTH = 600,  // get width from el[0], and setup two-way binding
+	    HEIGHT = 400, // change to 0.7 * WIDTH
 	    MARGINS = {
 		top: 20,
 		right: 20,
@@ -273,9 +273,9 @@
 	    } // end of watch callback function
 	       
 	    // declare watch functions
-	    $scope.$watch('wmin', function(){watchCallback()}); // need to call from inside a function() for some reason, otherwise it doesn't work
-	    $scope.$watch('wmax', function(){watchCallback()});
-	    $scope.$watch('currentMaterial', function(){watchCallback()});
+	    // need to call from inside a function() for some reason, otherwise it doesn't work
+	    $scope.$watchGroup(['wmin','wmax','currentMaterial'], function(){watchCallback()})
+
 	} // end of link function
 
 	return {
