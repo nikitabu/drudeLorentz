@@ -82,8 +82,8 @@
 	    }
 
 	    //define plot extents 
-	    WIDTH = 600,  // get width from el[0], and setup two-way binding
-	    HEIGHT = 400, // change to 0.7 * WIDTH
+	    WIDTH = el[0].offsetWidth,  // get width from el[0], and setup two-way binding
+	    HEIGHT = Math.round(0.6*WIDTH), // change to 0.7 * WIDTH
 	    MARGINS = {
 		top: 20,
 		right: 20,
@@ -180,8 +180,8 @@
 		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.005*($scope.wmax-$scope.wmin));
 
 		//define plot extents
-		WIDTH = 600,
-		HEIGHT = 400,
+		WIDTH = el[0].offsetWidth,
+		HEIGHT = Math.round(0.6*WIDTH),
 		MARGINS = {
 		    top: 20,
 		    right: 20,
