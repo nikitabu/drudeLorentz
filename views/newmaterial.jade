@@ -6,7 +6,7 @@ block input
       .panel-heading
         h1 Add New Material
       .panel-body
-          form(name="materialForm", method="post", action="/addmaterial", class="form-horizontal", novalidate)
+          form(name="materialForm", method="post", ng-submit="addNewMaterial()", class="form-horizontal", novalidate)
 
             div.form-group(ng-class="{ 'has-success' : !materialForm.name.$invalid, 'has-error' : materialForm.name.$invalid }")
               label.col-sm-6.control-label(for="form_name") Material Name

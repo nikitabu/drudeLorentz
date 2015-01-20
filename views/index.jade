@@ -14,7 +14,7 @@ block input
             li
               a(class="btn btn-warning", role="button", href='/editmaterials') Edit
             li
-              a(class="btn btn-warning", role="button", href='/newmaterial') New
+              a(class="btn btn-warning", role="button", href='/newmaterial', ng-click='createNewMaterial()') New
     
     .panel.panel-default
       .panel-heading
@@ -54,7 +54,7 @@ block input
 block output
   .panel.panel-default
     .panel-body
-      plot-graph
+      plot-graph(resize)
       form(name="plotForm", class="form-horizontal", novalidate)
         div.form-group(ng-class="{'has-error' : plotForm.wmin.$invalid}")
           label.col-sm-4.control-label(for="form_wmin")  Minimum Wavelength

@@ -3,6 +3,19 @@
     // initialize angularjs module
     var app = angular.module('drudeLorentzApp', []);
 
+    // localize the global resize event by converting js events to angular scope events
+    app.directive('resize', function($window) {
+	return {
+	    link: function(scope) {
+		angular.element($window).on('resize', function(e) {
+		    // Namespacing events with name of directive + event to avoid collisions
+		    console.log("window was resized");
+		    scope.$broadcast('resize::resize');
+		});
+	    }
+	}
+    });
+
     // plotting directive
     app.directive("plotGraph", function() {
 
@@ -275,6 +288,8 @@
 	    // declare watch functions
 	    // need to call from inside a function() for some reason, otherwise it doesn't work
 	    $scope.$watchGroup(['wmin','wmax','currentMaterial'], function(){watchCallback()})
+
+	    $scope.$on('resize::resize', function() {watchCallback()});
 
 	} // end of link function
 
