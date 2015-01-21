@@ -32,7 +32,7 @@
 		}
 		else{
 		    var scope = {
-			lam : lambda,
+			lam : 0.001*lambda,
 			wc :  1.24086,
 			wp :  $scope.currentMaterial.wp,
 			eps : $scope.currentMaterial.eps,
@@ -67,7 +67,7 @@
 		}
 		else{
 		    var scope = {
-			lam : lambda,
+			lam : 0.001*lambda,
 			wc :  1.24086,
 			wp :  $scope.currentMaterial.wp,
 			eps : $scope.currentMaterial.eps,
@@ -308,8 +308,8 @@
 	$scope.materials = null;
 
 	// initialize min/max plot parameters
-	$scope.wmin = 0.3;
-	$scope.wmax = 1.55;
+	$scope.wmin = 100;
+	$scope.wmax = 800;
 
 	// initialize new/old material indicator for edit material service
 	$scope.newMaterial = false;
