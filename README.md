@@ -12,3 +12,4 @@ To Do:
 - Add plot labels and a responsive cursor to the D3 plot.
 - Option to view permittivity/refractive index and eV/frequency/wavelength
 - Debounce the input fields to minimize handling invocations
+- Has trouble serving pages when under large loads, do some optimization
