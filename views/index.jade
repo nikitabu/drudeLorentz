@@ -25,32 +25,32 @@ block input
              $$\epsilon = \epsilon_{\infty} - \frac{f_0 \cdot \omega_p^2}{\omega^2 - i \omega \gamma} + \sum_j \frac{f_j \cdot \omega_{p}^2}{\omega_j^2 - \omega^2 + i \omega \gamma_j}$$  
           tr
             td $\epsilon_\infty = $#[span(mathjax-bind="currentMaterial.eps")]
-            td $m^* = $#[span(mathjax-bind="currentMaterial.meff")]
-            td $\omega_p = $#[span(mathjax-bind="currentMaterial.wp")]
+            td $m^* = $#[span(mathjax-bind="currentMaterial.meff")]$m_e$
+            td $\omega_p = $#[span(mathjax-bind="currentMaterial.wp")]$\ [\mathrm{eV}]$
           tr
-            td $f_0 = $#[span(mathjax-bind="currentMaterial.f0")]
-            td $\omega_0 = 0 $
-            td $\gamma_0 = $#[span(mathjax-bind="currentMaterial.g0")]      
+            td $f_0 = $#[span(mathjax-bind="currentMaterial.f0")]$\ [\mathrm{eV}]$
+            td $\omega_0 = 0 $$\ [\mathrm{eV}]$
+            td $\gamma_0 = $#[span(mathjax-bind="currentMaterial.g0")] $\ [\mathrm{eV}]$     
           tr
-            td $f_1 = $#[span(mathjax-bind="currentMaterial.f1")]
-            td $\omega_1 = $#[span(mathjax-bind="currentMaterial.w1")]
-            td $\gamma_1 = $#[span(mathjax-bind="currentMaterial.g1")]
+            td $f_1 = $#[span(mathjax-bind="currentMaterial.f1")]$\ [\mathrm{eV}]$
+            td $\omega_1 = $#[span(mathjax-bind="currentMaterial.w1")]$\ [\mathrm{eV}]$
+            td $\gamma_1 = $#[span(mathjax-bind="currentMaterial.g1")]$\ [\mathrm{eV}]$
           tr
-            td $f_2 = $#[span(mathjax-bind="currentMaterial.f2")]
-            td $\omega_2 = $#[span(mathjax-bind="currentMaterial.w2")]
-            td $\gamma_2 = $#[span(mathjax-bind="currentMaterial.g2")]
+            td $f_2 = $#[span(mathjax-bind="currentMaterial.f2")]$\ [\mathrm{eV}]$
+            td $\omega_2 = $#[span(mathjax-bind="currentMaterial.w2")]$\ [\mathrm{eV}]$
+            td $\gamma_2 = $#[span(mathjax-bind="currentMaterial.g2")]$\ [\mathrm{eV}]$
           tr
-            td $f_3 = $#[span(mathjax-bind="currentMaterial.f3")]
-            td $\omega_3 = $#[span(mathjax-bind="currentMaterial.w3")]
-            td $\gamma_3 = $#[span(mathjax-bind="currentMaterial.g3")]
+            td $f_3 = $#[span(mathjax-bind="currentMaterial.f3")]$\ [\mathrm{eV}]$
+            td $\omega_3 = $#[span(mathjax-bind="currentMaterial.w3")]$\ [\mathrm{eV}]$
+            td $\gamma_3 = $#[span(mathjax-bind="currentMaterial.g3")]$\ [\mathrm{eV}]$
           tr
-            td $f_4 = $#[span(mathjax-bind="currentMaterial.f4")]
-            td $\omega_4 = $#[span(mathjax-bind="currentMaterial.w4")]
-            td $\gamma_4 = $#[span(mathjax-bind="currentMaterial.g4")]
+            td $f_4 = $#[span(mathjax-bind="currentMaterial.f4")]$\ [\mathrm{eV}]$
+            td $\omega_4 = $#[span(mathjax-bind="currentMaterial.w4")]$\ [\mathrm{eV}]$
+            td $\gamma_4 = $#[span(mathjax-bind="currentMaterial.g4")]$\ [\mathrm{eV}]$
           tr
-            td $f_5 = $#[span(mathjax-bind="currentMaterial.f5")]
-            td $\omega_5 = $#[span(mathjax-bind="currentMaterial.w5")]
-            td $\gamma_5 = $#[span(mathjax-bind="currentMaterial.g5")]          
+            td $f_5 = $#[span(mathjax-bind="currentMaterial.f5")]$\ [\mathrm{eV}]$
+            td $\omega_5 = $#[span(mathjax-bind="currentMaterial.w5")]$\ [\mathrm{eV}]$
+            td $\gamma_5 = $#[span(mathjax-bind="currentMaterial.g5")]$\ [\mathrm{eV}]$
 block output
   .panel.panel-default
     .panel-body
@@ -59,8 +59,8 @@ block output
         div.form-group(ng-class="{'has-error' : plotForm.wmin.$invalid}")
           label.col-sm-4.control-label(for="form_wmin")  Minimum Wavelength [nm]
           div.col-sm-8
-            input.form-control(type="number", name='wmin', ng-model='wmin', required)
+            input.form-control(type="number", name='wmin', ng-model='wmin', ng-model-options="{debounce: 400}", required)
         div.form-group(ng-class="{'has-error' : plotForm.wmax.$invalid}")
           label.col-sm-4.control-label(for="form_wmax")  Maximum Wavelength [nm]
           div.col-sm-8
-            input.form-control(type="number", name='wmax', ng-model='wmax', required)
+            input.form-control(type="number", name='wmax', ng-model='wmax', ng-model-options="{debounce: 400}", required)
