@@ -59,8 +59,8 @@ block output
         div.form-group(ng-class="{'has-error' : plotForm.wmin.$invalid}")
           label.col-sm-4.control-label(for="form_wmin")  Minimum Wavelength [nm]
           div.col-sm-8
-            input.form-control(type="number", name='wmin', ng-model='wmin', ng-model-options="{debounce: 400}", required)
+            input.form-control(type="number", name='wmin', ng-model='wmin', ng-model-options="{debounce: 400}", min="1", required)
         div.form-group(ng-class="{'has-error' : plotForm.wmax.$invalid}")
           label.col-sm-4.control-label(for="form_wmax")  Maximum Wavelength [nm]
           div.col-sm-8
-            input.form-control(type="number", name='wmax', ng-model='wmax', ng-model-options="{debounce: 400}", required)
+            input.form-control(type="number", name='wmax', ng-model='wmax', ng-model-options="{debounce: 400}", min="1", required)

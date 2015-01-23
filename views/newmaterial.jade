@@ -27,87 +27,87 @@ block input
             div.form-group(ng-class="{ 'has-success' : !materialForm.wp.$invalid, 'has-error' : materialForm.wp.$invalid }")
               label.col-sm-6.control-label(for="form_wp") Plasma Frequency
               .col-sm-6
-                input#form_wp.form-control(type="number", placeholder="1", name="wp", ng-model='currentMaterial.wp', required)
+                input#form_wp.form-control(type="number", placeholder="1", name="wp", ng-model='currentMaterial.wp', min="0", required)
 
             div.form-group(ng-class="{ 'has-success' : !materialForm.f0.$invalid, 'has-error' : materialForm.f0.$invalid }")
               label.col-sm-6.control-label(for="form_f0") Drude Scattering Amplitude 
               .col-sm-6
-                input#form_f0.form-control(type="number", placeholder="1", name="f0", ng-model='currentMaterial.f0', required)     
+                input#form_f0.form-control(type="number", placeholder="1", name="f0", ng-model='currentMaterial.f0', min="0", required)     
             
             div.form-group(ng-class="{ 'has-success' : !materialForm.g0.$invalid, 'has-error' : materialForm.g0.$invalid }")
               label.col-sm-6.control-label(for="form_g0") Drude Damping (eV)
               .col-sm-6
-                input#form_g0.form-control(type="number", placeholder="1", name="g0", ng-model='currentMaterial.g0', required)     
+                input#form_g0.form-control(type="number", placeholder="1", name="g0", ng-model='currentMaterial.g0', min="0", required)     
             br
  
             div.form-group(ng-class="{ 'has-success' : !materialForm.w1.$invalid, 'has-error' : materialForm.w1.$invalid }")
               label.col-sm-6.control-label(for="form_w1") Lorentz Resonant Frequency #1 (eV)
               .col-sm-6
-                input#form_w1.form-control(type="number", placeholder="1", name="w1", ng-model='currentMaterial.w1', required)     
+                input#form_w1.form-control(type="number", placeholder="1", name="w1", ng-model='currentMaterial.w1', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.g1.$invalid, 'has-error' : materialForm.g1.$invalid }")
               label.col-sm-6.control-label(for="form_g1") Lorentz Damping Rate #1 (eV)
               .col-sm-6
-                input#form_g1.form-control(type="number", placeholder="1", name="g1", ng-model='currentMaterial.g1', required)     
+                input#form_g1.form-control(type="number", placeholder="1", name="g1", ng-model='currentMaterial.g1', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.f1.$invalid, 'has-error' : materialForm.f1.$invalid }")
               label.col-sm-6.control-label(for="form_f1") Lorentz Scattering Amplitude #1
               .col-sm-6
-                input#form_f1.form-control(type="number", placeholder="1", name="f1", ng-model='currentMaterial.f1', required)     
+                input#form_f1.form-control(type="number", placeholder="1", name="f1", ng-model='currentMaterial.f1', min="0", required)     
             br
         
             div.form-group(ng-class="{ 'has-success' : !materialForm.w2.$invalid, 'has-error' : materialForm.w2.$invalid }")
               label.col-sm-6.control-label(for="form_w2") Lorentz Resonant Frequency #2 (eV)
               .col-sm-6
-                input#form_w2.form-control(type="number", placeholder="2", name="w2", ng-model='currentMaterial.w2', required)     
+                input#form_w2.form-control(type="number", placeholder="2", name="w2", ng-model='currentMaterial.w2', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.g2.$invalid, 'has-error' : materialForm.g2.$invalid }")
               label.col-sm-6.control-label(for="form_g2") Lorentz Damping Rate #2 (eV)
               .col-sm-6
-                input#form_g2.form-control(type="number", placeholder="2", name="g2", ng-model='currentMaterial.g2', required)     
+                input#form_g2.form-control(type="number", placeholder="2", name="g2", ng-model='currentMaterial.g2', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.f2.$invalid, 'has-error' : materialForm.f2.$invalid }")
               label.col-sm-6.control-label(for="form_f2") Lorentz Scattering Amplitude #2
               .col-sm-6
-                input#form_f2.form-control(type="number", placeholder="2", name="f2", ng-model='currentMaterial.f2', required)     
+                input#form_f2.form-control(type="number", placeholder="2", name="f2", ng-model='currentMaterial.f2', min="0", required)     
             br  
             
             div.form-group(ng-class="{ 'has-success' : !materialForm.w3.$invalid, 'has-error' : materialForm.w3.$invalid }")
               label.col-sm-6.control-label(for="form_w3") Lorentz Resonant Frequency #3 (eV)
               .col-sm-6
-                input#form_w3.form-control(type="number", placeholder="3", name="w3", ng-model='currentMaterial.w3', required)     
+                input#form_w3.form-control(type="number", placeholder="3", name="w3", ng-model='currentMaterial.w3', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.g3.$invalid, 'has-error' : materialForm.g3.$invalid }")
               label.col-sm-6.control-label(for="form_g3") Lorentz Damping Rate #3 (eV)
               .col-sm-6
-                input#form_g3.form-control(type="number", placeholder="3", name="g3", ng-model='currentMaterial.g3', required)     
+                input#form_g3.form-control(type="number", placeholder="3", name="g3", ng-model='currentMaterial.g3', min="0",required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.f3.$invalid, 'has-error' : materialForm.f3.$invalid }")
               label.col-sm-6.control-label(for="form_f3") Lorentz Scattering Amplitude #3
               .col-sm-6
-                input#form_f3.form-control(type="number", placeholder="3", name="f3", ng-model='currentMaterial.f3', required)     
+                input#form_f3.form-control(type="number", placeholder="3", name="f3", ng-model='currentMaterial.f3', min="0", required)     
             br
 
             div.form-group(ng-class="{ 'has-success' : !materialForm.w4.$invalid, 'has-error' : materialForm.w4.$invalid }")
               label.col-sm-6.control-label(for="form_w4") Lorentz Resonant Frequency #4 (eV)
               .col-sm-6
-                input#form_w4.form-control(type="number", placeholder="4", name="w4", ng-model='currentMaterial.w4', required)     
+                input#form_w4.form-control(type="number", placeholder="4", name="w4", ng-model='currentMaterial.w4', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.g4.$invalid, 'has-error' : materialForm.g4.$invalid }")
               label.col-sm-6.control-label(for="form_g4") Lorentz Damping Rate #4 (eV)
               .col-sm-6
-                input#form_g4.form-control(type="number", placeholder="4", name="g4", ng-model='currentMaterial.g4', required)     
+                input#form_g4.form-control(type="number", placeholder="4", name="g4", ng-model='currentMaterial.g4', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.f4.$invalid, 'has-error' : materialForm.f4.$invalid }")
               label.col-sm-6.control-label(for="form_f4") Lorentz Scattering Amplitude #4
               .col-sm-6
-                input#form_f4.form-control(type="number", placeholder="4", name="f4", ng-model='currentMaterial.f4', required)     
+                input#form_f4.form-control(type="number", placeholder="4", name="f4", ng-model='currentMaterial.f4', min="0", required)     
             br
 
             div.form-group(ng-class="{ 'has-success' : !materialForm.w5.$invalid, 'has-error' : materialForm.w5.$invalid }")
               label.col-sm-6.control-label(for="form_w5") Lorentz Resonant Frequency #5 (eV)
               .col-sm-6
-                input#form_w5.form-control(type="number", placeholder="0", name="w5", ng-model='currentMaterial.w5', required)     
+                input#form_w5.form-control(type="number", placeholder="0", name="w5", ng-model='currentMaterial.w5', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.g5.$invalid, 'has-error' : materialForm.g5.$invalid }")
               label.col-sm-6.control-label(for="form_g5") Lorentz Damping Rate #5 (eV)
               .col-sm-6
-                input#form_g5.form-control(type="number", placeholder="0", name="g5", ng-model='currentMaterial.g5', required)     
+                input#form_g5.form-control(type="number", placeholder="0", name="g5", ng-model='currentMaterial.g5', min="0", required)     
             div.form-group(ng-class="{ 'has-success' : !materialForm.f5.$invalid, 'has-error' : materialForm.f5.$invalid }")
               label.col-sm-6.control-label(for="form_f5") Lorentz Scattering Amplitude #5
               .col-sm-6
-                input#form_f5.form-control(type="number", placeholder="0", name="f5", ng-model='currentMaterial.f5', required)     
+                input#form_f5.form-control(type="number", placeholder="0", name="f5", ng-model='currentMaterial.f5', min="0", required)     
             br
 
             button.btn.btn-primary(type="submit", ng-disabled="materialForm.$invalid") Add
