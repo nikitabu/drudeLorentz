@@ -81,3 +81,8 @@ svg {
     font-family: sans-serif;
     font-size: 13px;
 }
+
+.errorMessage{
+    color : red;
+    font-weight: bold;
+}
