@@ -127,7 +127,7 @@
 	    link: function(scope) {
 		angular.element($window).on('resize', function(e) {
 		    // Namespacing events with name of directive + event to avoid collisions
-		    console.log("window was resized");
+		    // console.log("window was resized");
 		    scope.$broadcast('resize::resize');
 		});
 	    }
@@ -306,14 +306,14 @@
 	    // append the line to the svg
 	    vis.append("svg:path")
 		.attr("d", lineReal(wavelengths))
-		.attr("stroke", "orange")
+		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
 		.attr("class","lineReal");
 
 	    vis.append("svg:path")
 		.attr("d", lineImag(wavelengths))
-		.attr("stroke", "blue")
+		.attr("stroke", "orange")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
 		.attr("class","lineImag");
