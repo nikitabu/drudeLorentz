@@ -1,9 +1,127 @@
 (function(){
 
-    // initialize angularjs module
+    // INITIALIZE ANGULARJS MODULE
     var app = angular.module('drudeLorentzApp', []);
 
-    // localize the global resize event by converting js events to angular scope events
+    // DEFINE THE PRIMARY CONTROLLER
+    app.controller('materialController', function($scope, $http, $location, $window){
+
+	// initialize materials object to null
+	$scope.materials = null;
+
+	// initialize min/max plot parameters
+	$scope.wmin = 100;
+	$scope.wmax = 800;
+
+	// initialize new/old material indicator for edit material service
+	$scope.newMaterial = false;
+
+	// fill the materials object with an async GET request for a JSON object (from the database)
+	$http.get('/material')
+	     .success( function(data) {
+		 $scope.materials = data;
+		 $scope.currentMaterial = data[0];
+	     })
+	    .error( function(data, status, headers, config){
+		console.log('error retreiving materials');
+	    })
+
+	// changes the current material
+	$scope.editCurrentMaterial = function(item) {
+	    // set current material
+	    $scope.currentMaterial = item;
+	}
+
+	$scope.createNewMaterial = function() {
+	    console.log("creating a new material")
+
+	    $scope.currentMaterial.name = "New";
+	    $scope.currentMaterial.eps = 0;
+	    $scope.currentMaterial.meff = 0;
+	    $scope.currentMaterial.wp = 0;
+	    $scope.currentMaterial.f0 = 0;
+	    $scope.currentMaterial.g0 = 0;
+	    $scope.currentMaterial.f1 = 0;
+	    $scope.currentMaterial.g1e = 0;
+	    $scope.currentMaterial.w1 = 0;
+	    $scope.currentMaterial.f2 = 0;
+	    $scope.currentMaterial.g2 = 0;
+	    $scope.currentMaterial.w2 = 0;
+            $scope.currentMaterial.f3 = 0;
+	    $scope.currentMaterial.g3 = 0;
+	    $scope.currentMaterial.w3 = 0;
+	    $scope.currentMaterial.f4 = 0;
+	    $scope.currentMaterial.g4 = 0;
+	    $scope.currentMaterial.w4 = 0;
+	    $scope.currentMaterial.f5 = 0;
+	    $scope.currentMaterial.g5 = 0;
+	    $scope.currentMaterial.w5 = 0;
+	}
+
+	$scope.addNewMaterial = function() {
+	    console.log("adding a new material asynchronously through angular");
+
+	    $http.post('/addmaterial', 
+		       {
+			   name : $scope.currentMaterial.name,
+			   eps  : $scope.currentMaterial.eps,
+			   meff : $scope.currentMaterial.meff,
+			   wp   : $scope.currentMaterial.wp,
+			   f0 : $scope.currentMaterial.f0,
+			   g0 : $scope.currentMaterial.g0,
+			   f1 : $scope.currentMaterial.f1,
+			   g1 : $scope.currentMaterial.g1,
+			   w1 : $scope.currentMaterial.w1,
+			   f2 : $scope.currentMaterial.f2,
+			   g2 : $scope.currentMaterial.g2,
+			   w2 : $scope.currentMaterial.w2,
+			   f3 : $scope.currentMaterial.f3,
+			   g3 : $scope.currentMaterial.g3,
+			   w3 : $scope.currentMaterial.w3,
+			   f4 : $scope.currentMaterial.f4,
+			   g4 : $scope.currentMaterial.g4,
+			   w4 : $scope.currentMaterial.w4,
+			   f5 : $scope.currentMaterial.f5,
+			   g5 : $scope.currentMaterial.g5,
+			   w5 : $scope.currentMaterial.w5
+		       })
+		.success(function()
+			 {
+		    	     console.log("succesfully added material to db");
+			 })
+		.error(function(){console.log("error adding material to db")})
+
+	    $window.location.href="/";
+
+	}
+
+	// deletes the current material from both the database and the angular model
+	$scope.deleteCurrentMaterial = function() {
+	    // delete from database
+	    $http.delete('/deletematerial/' + $scope.currentMaterial.name).
+		success(function(){
+		    console.log("deleted material")
+		}).
+		error(function(){console.log("error deleting material")});
+	    // delete from angular (FIX, if there was an error removing from the db, the material will still be removed from angular!)
+	    $scope.materials.splice($scope.materials.indexOf($scope.currentMaterial), 1);
+	}
+
+	// sets current material colors
+	$scope.currentClass= function(name){
+	    if(name == $scope.currentMaterial.name)
+		return "btn-success";
+	    else
+		return "btn-primary";
+	}
+
+	// define the primary drude-lorentz model formula for mathjax
+	$scope.drudelorentz = "\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 - i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}";
+
+    });
+
+    // LOCALIZE GLOBAL RESIZE EVENTS
+    // localizes the global resize event by converting js events to angular scope events
     app.directive('resize', function($window) {
 	return {
 	    link: function(scope) {
@@ -16,7 +134,23 @@
 	}
     });
 
-    // plotting directive
+    // DIRECTIVE FOR BINDING LATEX TO ANGULAR
+    app.directive("mathjaxBind", function() {
+	return {
+            restrict : "A",
+            controller : ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+		$scope.$watch($attrs.mathjaxBind, function(value) {
+                    var $script = angular.element("<script type='math/tex'>")
+			.html(value == undefined ? "" : value);
+                    $element.html("");
+                    $element.append($script);
+                    MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
+		});
+            }]
+	};
+    });
+
+    // DIRECTIVE FOR GENERATING PLOTS
     app.directive("plotGraph", function() {
 
 	var link = function($scope,el) 
@@ -300,137 +434,37 @@
 	}
     });
 
+    // DIRECTIVE FOR VALIDATING VALUE > MIN WAVELENGTH
+    // not totally sure what "element" and "attributes" actually are
+    app.directive('valueGreaterMin', function(){
+	var link = function($scope, element, attributes, ngModel){
+	    ngModel.$validators.valueGreaterMin = function(value){
+		var status = value > $scope.wmin;
+		return status;
+	    }
+	};
 
-    // define primary app controller
-    app.controller('materialController', function($scope, $http, $location, $window){
-
-	// initialize materials object to null
-	$scope.materials = null;
-
-	// initialize min/max plot parameters
-	$scope.wmin = 100;
-	$scope.wmax = 800;
-
-	// initialize new/old material indicator for edit material service
-	$scope.newMaterial = false;
-
-	// fill the materials object with an async GET request for a JSON object (from the database)
-	$http.get('/material')
-	     .success( function(data) {
-		 $scope.materials = data;
-		 $scope.currentMaterial = data[0];
-	     })
-	    .error( function(data, status, headers, config){
-		console.log('error retreiving materials');
-	    })
-
-	// changes the current material
-	$scope.editCurrentMaterial = function(item) {
-	    // set current material
-	    $scope.currentMaterial = item;
-	}
-
-	$scope.createNewMaterial = function() {
-	    console.log("creating a new material")
-
-	    $scope.currentMaterial.name = "New";
-	    $scope.currentMaterial.eps = 0;
-	    $scope.currentMaterial.meff = 0;
-	    $scope.currentMaterial.wp = 0;
-	    $scope.currentMaterial.f0 = 0;
-	    $scope.currentMaterial.g0 = 0;
-	    $scope.currentMaterial.f1 = 0;
-	    $scope.currentMaterial.g1e = 0;
-	    $scope.currentMaterial.w1 = 0;
-	    $scope.currentMaterial.f2 = 0;
-	    $scope.currentMaterial.g2 = 0;
-	    $scope.currentMaterial.w2 = 0;
-            $scope.currentMaterial.f3 = 0;
-	    $scope.currentMaterial.g3 = 0;
-	    $scope.currentMaterial.w3 = 0;
-	    $scope.currentMaterial.f4 = 0;
-	    $scope.currentMaterial.g4 = 0;
-	    $scope.currentMaterial.w4 = 0;
-	    $scope.currentMaterial.f5 = 0;
-	    $scope.currentMaterial.g5 = 0;
-	    $scope.currentMaterial.w5 = 0;
-	}
-
-	$scope.addNewMaterial = function() {
-	    console.log("adding a new material asynchronously through angular");
-
-	    $http.post('/addmaterial', 
-		       {
-			   name : $scope.currentMaterial.name,
-			   eps  : $scope.currentMaterial.eps,
-			   meff : $scope.currentMaterial.meff,
-			   wp   : $scope.currentMaterial.wp,
-			   f0 : $scope.currentMaterial.f0,
-			   g0 : $scope.currentMaterial.g0,
-			   f1 : $scope.currentMaterial.f1,
-			   g1 : $scope.currentMaterial.g1,
-			   w1 : $scope.currentMaterial.w1,
-			   f2 : $scope.currentMaterial.f2,
-			   g2 : $scope.currentMaterial.g2,
-			   w2 : $scope.currentMaterial.w2,
-			   f3 : $scope.currentMaterial.f3,
-			   g3 : $scope.currentMaterial.g3,
-			   w3 : $scope.currentMaterial.w3,
-			   f4 : $scope.currentMaterial.f4,
-			   g4 : $scope.currentMaterial.g4,
-			   w4 : $scope.currentMaterial.w4,
-			   f5 : $scope.currentMaterial.f5,
-			   g5 : $scope.currentMaterial.g5,
-			   w5 : $scope.currentMaterial.w5
-		       })
-		.success(function()
-			 {
-		    	     console.log("succesfully added material to db");
-			 })
-		.error(function(){console.log("error adding material to db")})
-
-	    $window.location.href="/";
-
-	}
-
-	// deletes the current material from both the database and the angular model
-	$scope.deleteCurrentMaterial = function() {
-	    // delete from database
-	    $http.delete('/deletematerial/' + $scope.currentMaterial.name).
-		success(function(){
-		    console.log("deleted material")
-		}).
-		error(function(){console.log("error deleting material")});
-	    // delete from angular (FIX, if there was an error removing from the db, the material will still be removed from angular!)
-	    $scope.materials.splice($scope.materials.indexOf($scope.currentMaterial), 1);
-	}
-
-	// sets current material colors
-	$scope.currentClass= function(name){
-	    if(name == $scope.currentMaterial.name)
-		return "btn-success";
-	    else
-		return "btn-primary";
-	}
-
-	// define the primary drude-lorentz model formula for mathjax
-	$scope.drudelorentz = "\epsilon = \epsilon_{\infty} - \frac{\omega_p^2}{\omega^2 - i \gamma} + \frac{f_1 \omega_{1}^2}{\omega_1^2 - \omega^2 - i \gamma_1} + \frac{f_2 \omega_{2}^2}{\omega_2^2 - \omega^2 - i \gamma_2}";
-
+	return {
+	    restrict : "A",
+	    require : 'ngModel',
+	    link : link
+	};
     });
 
-    // latex/mathjax directive
-    app.directive("mathjaxBind", function() {
+    // DIRECTIVE FOR VALIDATING VALUE < MAX WAVELENGTH
+    // not totally sure what "element" and "attributes" actually are
+    app.directive('valueLessMax', function(){
+	var link = function($scope, element, attributes, ngModel){
+	    ngModel.$validators.valueLessMax = function(value){
+		var status = value < $scope.wmax;
+		return status;
+	    }
+	};
+
 	return {
-            restrict : "A",
-            controller : ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
-		$scope.$watch($attrs.mathjaxBind, function(value) {
-                    var $script = angular.element("<script type='math/tex'>")
-			.html(value == undefined ? "" : value);
-                    $element.html("");
-                    $element.append($script);
-                    MathJax.Hub.Queue(["Reprocess", MathJax.Hub, $element[0]]);
-		});
-            }]
+	    restrict : "A",
+	    require : 'ngModel',
+	    link : link
 	};
     });
 
