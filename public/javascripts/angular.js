@@ -325,30 +325,30 @@
 		.data(["orange","blue"])
 		.enter().append("g")
 		.attr("class","legend")
-		.attr("transform", "translate(400,0)");
+		.attr("transform", "translate(" + WIDTH + ",0)");
 
 	    legend.append("rect")
-		.attr("x", 20 )
+		.attr("x", -150 )
 		.attr("width", 20)
 		.attr("height", 20)
 		.style("fill", "orange")
 		.attr("y",30);
 
 	    legend.append("text")
-		.attr("x", 50)
+		.attr("x", -120)
 		.attr("y", 40)
 		.attr("dy", "0.35em")
 		.text("Real Part");
 
 	    legend.append("rect")
-		.attr("x", 20 )
+		.attr("x", -150 )
 		.attr("width", 20)
 		.attr("height", 20)
 		.style("fill", "blue")
 		.attr("y",60);
 
 	    legend.append("text")
-		.attr("x", 50)
+		.attr("x", -120)
 		.attr("y", 70)
 		.attr("dy", "0.35em")
 		.text("Imaginary Part");
@@ -419,6 +419,10 @@
 		    .transition().duration(1500).ease("sin-in-out")
 		    .attr("transform", "translate(" + (MARGINS.left) + ",0)")
 		    .call(yAxis);
+
+		vis.selectAll(".legend")
+		    .transition().duration(1500).ease("sin-in-out")
+		    .attr("transform", "translate(" + WIDTH + ",0)");
 
 		// define the line object
 		var lineReal = d3.svg.line()
