@@ -318,6 +318,38 @@
 		.attr("fill", "none")
 		.attr("class","lineImag");
 
+	    var legend = vis.selectAll(".legend")
+		.data(["orange","blue"])
+		.enter().append("g")
+		.attr("class","legend")
+		.attr("transform", "translate(400,0)");
+
+	    legend.append("rect")
+		.attr("x", 20 )
+		.attr("width", 20)
+		.attr("height", 20)
+		.style("fill", "orange")
+		.attr("y",30);
+
+	    legend.append("text")
+		.attr("x", 50)
+		.attr("y", 40)
+		.attr("dy", "0.35em")
+		.text("Real Part");
+
+	    legend.append("rect")
+		.attr("x", 20 )
+		.attr("width", 20)
+		.attr("height", 20)
+		.style("fill", "blue")
+		.attr("y",60);
+
+	    legend.append("text")
+		.attr("x", 50)
+		.attr("y", 70)
+		.attr("dy", "0.35em")
+		.text("Imaginary Part");
+
 	    // not sure why this is necessary, but latex breaks if it's missing
 	    vis.append("div"); 
 
