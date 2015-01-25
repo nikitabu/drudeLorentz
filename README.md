@@ -7,9 +7,8 @@ Software stack is entirely javascript. Serving with Node. Routing with Express. 
 To Do:
 
 - Convert form validation/submission to 100% angular. The traditional /POST system is limiting.
-- Optimize auto-plot scaling to maximize space filled, without cutting off the plot
 - Add user/administration functionality.
 - Add plot labels and a responsive cursor to the D3 plot.
 - Option to view permittivity/refractive index and eV/frequency/wavelength
-- Debounce the input fields to minimize handling invocations
 - Has trouble serving pages when under large loads, do some optimization
+- Min/Max Wavelength Input Validators break down if errors start accumulating

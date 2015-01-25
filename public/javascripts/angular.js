@@ -155,7 +155,10 @@
 
 	var link = function($scope,el) 
 	{
-	    var vis = d3.select(el[0]).append('svg');
+	    var vis = d3.select(el[0])
+		.append('svg')
+		.attr("class","main")
+		.style('height',400);
 
 	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.01*($scope.wmax-$scope.wmin));
 
@@ -367,6 +370,9 @@
 		    bottom: 20,
 		    left: 50
 		};
+
+		vis.select(".main")
+		    .style('height',HEIGHT - MARGINS.top - MARGINS.bottom);
 
 		// define range of x, with linear scaling
 		xRange = d3.scale.
