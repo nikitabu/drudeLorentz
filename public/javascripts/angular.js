@@ -232,9 +232,9 @@
 	    }
 
 	    //define plot extents 
-	    WIDTH = el[0].offsetWidth,  // get width from el[0], and setup two-way binding
-	    HEIGHT = Math.round(0.6*WIDTH), // change to 0.7 * WIDTH
-	    MARGINS = {
+	    var WIDTH = el[0].offsetWidth;  // get width from el[0], and setup two-way binding
+	    var HEIGHT = Math.round(0.6*WIDTH); // change to 0.7 * WIDTH
+	    var MARGINS = {
 		top: 20,
 		right: 20,
 		bottom: 20,
@@ -242,7 +242,7 @@
 	    };
 
 	    // define range of x, with linear scaling
-	    xRange = d3.scale.
+	    var xRange = d3.scale.
 		linear().
 		range([MARGINS.left, WIDTH - MARGINS.right]).
 		domain([
@@ -250,11 +250,11 @@
 		    d3.max(wavelengths)
 		]);
 
-	    real = wavelengths.map(function(d){return realPerm(d)});
-	    imag = wavelengths.map(function(d){return imagPerm(d)});
+	    var real = wavelengths.map(function(d){return realPerm(d)});
+	    var imag = wavelengths.map(function(d){return imagPerm(d)});
 
 	    // define range of y, with linear scaling
-	    yRange = d3.scale.
+	    var yRange = d3.scale.
 		linear().
 		range([HEIGHT - MARGINS.top, MARGINS.bottom]).
 		domain([
@@ -263,29 +263,38 @@
 		]);
 
 	    // define x axis object
-	    xAxis = d3.svg.axis()
+	    var xAxis = d3.svg.axis()
 		.scale(xRange)
 		.tickSize(3)
 		.tickSubdivide(true);
 
 	    // define y axis object
-	    yAxis = d3.svg.axis()
+	    var yAxis = d3.svg.axis()
 		.scale(yRange)
 		.tickSize(3)
 		.orient("left")
 		.tickSubdivide(true);
 
 	    // append the x-axis to the svg
-	    vis.append("svg:g")
+	    var xAxisObject = vis.append("svg:g")
 		.attr("class", "axis xAxis")
 		.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
 		.call(xAxis)	    
 
 	    // append the y-axis to the svg
-	    vis.append("svg:g")
+	    var yAxisObject = vis.append("svg:g")
 		.attr("class", "axis yAxis")
 		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
 		.call(yAxis)	    
+
+	    var tooltip = vis.append('div')
+		.style('position', 'fixed')
+		.style('padding', '0 10px')
+		.style('background', 'blue')
+		.style('opacity', '0')
+		.style('width', '60 px')
+		.style('height', '20 px')
+		.style('text-align', 'center')
 
 	    // define the line object
 	    var lineReal = d3.svg.line()
@@ -307,14 +316,27 @@
 		.interpolate('linear');
 
 	    // append the line to the svg
-	    vis.append("svg:path")
+	    var lineRealObject = vis.append("svg:path")
 		.attr("d", lineReal(wavelengths))
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
-		.attr("class","lineReal");
+		.attr("class","lineReal")
+		.on("mouseover", function(d){
+		    console.log("mouse over");
 
-	    vis.append("svg:path")
+		    tooltip.transition()
+			.style('opacity', '1');
+
+		    tooltip.html("<text>Tooltip</text>")
+			.style('left', (d3.event.pageX - 35) + 'px')
+			.style('top',  (d3.event.pageY - 30) + 'px')
+		})
+		.on('mouseout', function(d) {
+		    tooltip.style('opacity', '0')
+		});
+
+	    var lineImagObject = vis.append("svg:path")
 		.attr("d", lineImag(wavelengths))
 		.attr("stroke", "orange")
 		.attr("stroke-width", 2)
@@ -362,14 +384,8 @@
 		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.005*($scope.wmax-$scope.wmin));
 
 		//define plot extents
-		WIDTH = el[0].offsetWidth,
-		HEIGHT = Math.round(0.6*WIDTH),
-		MARGINS = {
-		    top: 20,
-		    right: 20,
-		    bottom: 20,
-		    left: 50
-		};
+		WIDTH = el[0].offsetWidth;
+		HEIGHT = Math.round(0.6*WIDTH);
 
 		vis.select(".main")
 		    .style('height',HEIGHT - MARGINS.top - MARGINS.bottom);
