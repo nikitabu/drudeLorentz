@@ -158,7 +158,7 @@
 	    var vis = d3.select(el[0])
 		.append('svg')
 		.attr("class","main")
-		.style('height',400);
+		.style('height',400)
 
 	    var wavelengths = d3.range($scope.wmin,$scope.wmax,0.01*($scope.wmax-$scope.wmin));
 
@@ -287,14 +287,15 @@
 		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
 		.call(yAxis)	    
 
-	    var tooltip = vis.append('div')
-		.style('position', 'fixed')
+	    // append tooltip to body (not the svg, so that we can use absolute positioning)
+	    var tooltip = d3.select("body").append('div')
+		.style('position', 'absolute')
 		.style('padding', '0 10px')
-		.style('background', 'blue')
 		.style('opacity', '0')
 		.style('width', '60 px')
 		.style('height', '20 px')
 		.style('text-align', 'center')
+		.text('tooltip')
 
 	    // define the line object
 	    var lineReal = d3.svg.line()
@@ -322,26 +323,27 @@
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
 		.attr("class","lineReal")
-		.on("mouseover", function(d){
-		    console.log("mouse over");
-
-		    tooltip.transition()
-			.style('opacity', '1');
-
-		    tooltip.html("<text>Tooltip</text>")
-			.style('left', (d3.event.pageX - 35) + 'px')
-			.style('top',  (d3.event.pageY - 30) + 'px')
-		})
-		.on('mouseout', function(d) {
-		    tooltip.style('opacity', '0')
-		});
+		    .on("mouseover", function(){		
+			tooltip.transition().duration(500).ease("sin-in-out")
+			    .style('opacity', '1')
+			    .style('left', d3.event.pageX + 'px')
+			    .style('top',  d3.event.pageY + 'px')
+			    .style('background', 'orange')
+		    })
 
 	    var lineImagObject = vis.append("svg:path")
 		.attr("d", lineImag(wavelengths))
 		.attr("stroke", "orange")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
-		.attr("class","lineImag");
+		.attr("class","lineImag")
+		    .on("mouseover", function(){		
+			tooltip.transition().duration(500).ease("sin-in-out")
+			    .style('opacity', '1')
+			    .style('left', d3.event.pageX + 'px')
+			    .style('top',  d3.event.pageY + 'px')
+			    .style('background', 'blue')
+		    })
 
 	    var legend = vis.selectAll(".legend")
 		.data(["orange","blue"])
