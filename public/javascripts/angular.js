@@ -355,6 +355,20 @@
 		.attr("transform", "translate(" + WIDTH + ",0)")
 		.style("shape-rendering","crispEdges");
 
+	    var xAxisLabel = vis.append("text")
+		.attr("class", "xLabel")
+		.attr("text-anchor", "end")
+		.text("Wavelength [nm]")
+		.attr("transform","translate(" + Math.round(0.5*WIDTH + MARGINS.left + 25) + "," + (Math.round(HEIGHT) + MARGINS.top) + ")")
+		.style("shape-rendering","crispEdges");
+
+	    var yAxisLabel = vis.append("text")
+		.attr("class", "yLabel")
+		.attr("text-anchor", "end")
+		.text("Permittivity")
+		.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.5*HEIGHT) - MARGINS.top - 10) + "),rotate(-90)")
+		.style("shape-rendering","crispEdges");
+
 	    legend.append("rect")
 		.attr("x", -150 )
 		.attr("width", 20)
