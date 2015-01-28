@@ -293,9 +293,10 @@
 		.style('padding', '0 10px')
 		.style('opacity', '0')
 		.style('width', '60 px')
-		.style('height', '20 px')
+		.style('height', '30 px')
 		.style('text-align', 'center')
-		.text('tooltip')
+		.style('font-size', '16px')
+		.style("shape-rendering","crispEdges");
 
 	    // define the line object
 	    var lineReal = d3.svg.line()
@@ -324,11 +325,12 @@
 		.attr("fill", "none")
 		.attr("class","lineReal")
 		    .on("mouseover", function(){		
-			tooltip.transition().duration(500).ease("sin-in-out")
+			tooltip.transition().duration(350).ease("sin-in-out")
 			    .style('opacity', '1')
 			    .style('left', d3.event.pageX + 'px')
 			    .style('top',  d3.event.pageY + 'px')
-			    .style('background', 'orange')
+			    .style('background-color', 'rgba(255,165,0,0.3)')
+			    .text("(" + d3.event.pageX + ","+ d3.event.pageY  + ")")
 		    })
 
 	    var lineImagObject = vis.append("svg:path")
@@ -338,18 +340,20 @@
 		.attr("fill", "none")
 		.attr("class","lineImag")
 		    .on("mouseover", function(){		
-			tooltip.transition().duration(500).ease("sin-in-out")
+			tooltip.transition().duration(350).ease("sin-in-out")
 			    .style('opacity', '1')
 			    .style('left', d3.event.pageX + 'px')
 			    .style('top',  d3.event.pageY + 'px')
-			    .style('background', 'blue')
+			    .style('background-color', 'rgba(0,0,255,0.3)')
+			    .text("(" + d3.event.pageX + ","+ d3.event.pageY  + ")")
 		    })
 
 	    var legend = vis.selectAll(".legend")
 		.data(["orange","blue"])
 		.enter().append("g")
 		.attr("class","legend")
-		.attr("transform", "translate(" + WIDTH + ",0)");
+		.attr("transform", "translate(" + WIDTH + ",0)")
+		.style("shape-rendering","crispEdges");
 
 	    legend.append("rect")
 		.attr("x", -150 )
