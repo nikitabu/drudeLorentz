@@ -359,14 +359,14 @@
 		.attr("class", "xLabel")
 		.attr("text-anchor", "end")
 		.text("Wavelength [nm]")
-		.attr("transform","translate(" + Math.round(0.5*WIDTH + MARGINS.left + 25) + "," + (Math.round(HEIGHT) + MARGINS.top) + ")")
+		.attr("transform","translate(" + Math.round(0.53*WIDTH + MARGINS.left) + "," + (Math.round(HEIGHT) + MARGINS.top) + ")")
 		.style("shape-rendering","crispEdges");
 
 	    var yAxisLabel = vis.append("text")
 		.attr("class", "yLabel")
 		.attr("text-anchor", "end")
 		.text("Permittivity")
-		.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.5*HEIGHT) - MARGINS.top - 10) + "),rotate(-90)")
+		.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.45*HEIGHT) - MARGINS.top) + "),rotate(-90)")
 		.style("shape-rendering","crispEdges");
 
 	    legend.append("rect")
@@ -407,8 +407,7 @@
 		WIDTH = el[0].offsetWidth;
 		HEIGHT = Math.round(0.6*WIDTH);
 
-		vis.select(".main")
-		    .style('height',HEIGHT - MARGINS.top - MARGINS.bottom);
+		d3.select("svg").style('height',HEIGHT + MARGINS.top + MARGINS.bottom);
 
 		// define range of x, with linear scaling
 		xRange = d3.scale.
@@ -495,6 +494,10 @@
 		    .attr("stroke-width", 2)
 		    .attr("fill", "none");
 
+		xAxisLabel.attr("transform","translate(" + Math.round(0.53*WIDTH + MARGINS.left) + "," + (Math.round(HEIGHT) + MARGINS.top) + ")");
+
+		yAxisLabel.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.45*HEIGHT) - MARGINS.top) + "),rotate(-90)");
+	
 	    } // end of watch callback function
 	       
 	    // declare watch functions
