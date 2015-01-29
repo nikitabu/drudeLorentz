@@ -11,7 +11,7 @@
 
 	// initialize min/max plot parameters
 	$scope.wmin = 100;
-	$scope.wmax = 800;
+	$scope.wmax = 600;
 
 	// initialize new/old material indicator for edit material service
 	$scope.newMaterial = false;
@@ -298,6 +298,57 @@
 		.style('font-size', '16px')
 		.style("shape-rendering","crispEdges");
 
+	    // defined function to move tooltips
+	    function mousemove() {                             
+		var x0 = xRange.invert(d3.mouse(this)[0]);  //back out the wavelength from the current mouse x position [1] gives y-position
+		var i = d3.bisectLeft(wavelengths, x0);     //compute the corresponding index in the wavelengths vector
+		var w = wavelengths[i - 1];                 //compute wavelength (maybe not necessary?)
+		
+		// console.log("(Wavelength, Permittivity) = (" + w + "," + realPerm(w) + ")");
+
+		// if undefined, break out of the function
+		if(typeof w ===  'undefined'){return false;}
+
+		// move real cursor
+		focus.select("circle.y1")            
+		    .attr("transform",                         
+			  "translate(" + xRange(w) + "," +     
+                          yRange(realPerm(w)) + ")");        
+
+		// move imag cursor
+		focus.select("circle.y2")            
+		    .attr("transform",                         
+			  "translate(" + xRange(w) + "," +     
+                          yRange(imagPerm(w)) + ")");        
+	    }   
+
+	    // append a focus object to manage the tooltip
+	    var focus = vis.append("g")
+		.style("display","none");
+
+	    // append a circular tooltip
+	    focus.append("circle")
+		.attr("class","y1")
+		.style("fill","rgba(255,165,0,0.3)")
+		.style("stroke","black")
+		.attr("r","5");
+
+	    focus.append("circle")
+		.attr("class","y2")
+		.style("fill","rgba(0,0,255,0.2)")
+		.style("stroke","black")
+		.attr("r","5");
+
+	    // append the "invisible box" to detect mouse events
+	    vis.append("rect")
+		.attr("width", WIDTH)
+		.attr("height", HEIGHT)
+		.style("fill", "none")
+		.style("pointer-events", "all")
+		.on("mouseover", function() { focus.style("display", null); })
+		.on("mouseout", function() { focus.style("display", "none"); })
+		.on("mousemove", mousemove);
+
 	    // define the line object
 	    var lineReal = d3.svg.line()
 		.x(function (d) {
@@ -324,7 +375,9 @@
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
 		.attr("class","lineReal")
-		    .on("mouseover", function(){		
+		    .on("mouseover", function(d, i){
+			console.log(i);
+		
 			tooltip.transition().duration(350).ease("sin-in-out")
 			    .style('opacity', '1')
 			    .style('left', d3.event.pageX + 'px')
