@@ -287,23 +287,16 @@
 		.attr("transform", "translate(" + (MARGINS.left) + ",0)")
 		.call(yAxis)	    
 
-	    // append tooltip to body (not the svg, so that we can use absolute positioning)
-	    var tooltip = d3.select("body").append('div')
-		.style('position', 'absolute')
-		.style('padding', '0 10px')
-		.style('opacity', '0')
-		.style('width', '60 px')
-		.style('height', '30 px')
-		.style('text-align', 'center')
-		.style('font-size', '16px')
-		.style("shape-rendering","crispEdges");
-
 	    // defined function to move tooltips
 	    function mousemove() {                             
 		var x0 = xRange.invert(d3.mouse(this)[0]);  //back out the wavelength from the current mouse x position [1] gives y-position
 		var i = d3.bisectLeft(wavelengths, x0);     //compute the corresponding index in the wavelengths vector
 		var w = wavelengths[i - 1];                 //compute wavelength (maybe not necessary?)
-		
+
+		var eR = yRange(realPerm(w));
+		var eI = yRange(imagPerm(w));
+		var xW = xRange(w);
+
 		// console.log("(Wavelength, Permittivity) = (" + w + "," + realPerm(w) + ")");
 
 		// if undefined, break out of the function
@@ -312,14 +305,38 @@
 		// move real cursor
 		focus.select("circle.y1")            
 		    .attr("transform",                         
-			  "translate(" + xRange(w) + "," +     
-                          yRange(realPerm(w)) + ")");        
+			  "translate(" + xW + "," + eR + ")");        
 
 		// move imag cursor
 		focus.select("circle.y2")            
 		    .attr("transform",                         
-			  "translate(" + xRange(w) + "," +     
-                          yRange(imagPerm(w)) + ")");        
+			  "translate(" + xW + "," + eI + ")");        
+
+		focus.select(".xLine")
+		    .attr("transform",
+			  "translate(" + xW + "," + Math.min(eR,eI) + ")")
+		    .attr("y2", HEIGHT - Math.min(eR,eI) - 15 );
+
+		focus.select(".yRealLine")
+		    .attr("transform",
+			  "translate(" + (WIDTH*(-1) + MARGINS.left - 10) + "," + eR  + ")")
+		    .attr("x2", (WIDTH*2) - MARGINS.right - MARGINS.left );
+
+		focus.select(".yImagLine")
+		    .attr("transform",
+			  "translate(" + (WIDTH*(-1) + MARGINS.left - 10) + "," + eI  + ")")
+		    .attr("x2", (WIDTH*2) - MARGINS.right - MARGINS.left );
+
+		focus.select("text.yReal")
+		    .attr("transform",                         
+			  "translate(" + xW + "," + eR + ")")        
+		    .text("(" + w + "," + realPerm(w).toFixed(2) + ")");
+
+		focus.select("text.yImag")
+		    .attr("transform",                         
+			  "translate(" + xW + "," + eI + ")")        
+		    .text("(" + w + "," + imagPerm(w).toFixed(2) + ")");
+
 	    }   
 
 	    // append a focus object to manage the tooltip
@@ -338,6 +355,34 @@
 		.style("fill","rgba(0,0,255,0.2)")
 		.style("stroke","black")
 		.attr("r","5");
+
+	    // append the x line
+	    focus.append("line")
+		.attr("class", "xLine")
+		.style("stroke", "black")
+		.style("stroke-dasharray", "3,3")
+		.style("opacity", 0.5)
+		.attr("y1", 0)
+		.attr("y2", HEIGHT);
+
+	    // append the yReal line
+	    focus.append("line")
+		.attr("class", "yRealLine")
+		.style("stroke", "black")
+		.style("stroke-dasharray", "3,3")
+		.style("opacity", 0.5)
+		.attr("x1", WIDTH)
+		.attr("x2", WIDTH);
+
+	    // append the yImag line
+	    focus.append("line")
+		.attr("class", "yImagLine")
+		.style("stroke", "black")
+		.style("stroke-dasharray", "3,3")
+		.style("opacity", 0.5)
+
+		.attr("x1", WIDTH)
+		.attr("x2", WIDTH);
 
 	    // append the "invisible box" to detect mouse events
 	    vis.append("rect")
@@ -374,32 +419,14 @@
 		.attr("stroke", "blue")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
-		.attr("class","lineReal")
-		    .on("mouseover", function(d, i){
-			console.log(i);
-		
-			tooltip.transition().duration(350).ease("sin-in-out")
-			    .style('opacity', '1')
-			    .style('left', d3.event.pageX + 'px')
-			    .style('top',  d3.event.pageY + 'px')
-			    .style('background-color', 'rgba(255,165,0,0.3)')
-			    .text("(" + d3.event.pageX + ","+ d3.event.pageY  + ")")
-		    })
+		.attr("class","lineReal");
 
 	    var lineImagObject = vis.append("svg:path")
 		.attr("d", lineImag(wavelengths))
 		.attr("stroke", "orange")
 		.attr("stroke-width", 2)
 		.attr("fill", "none")
-		.attr("class","lineImag")
-		    .on("mouseover", function(){		
-			tooltip.transition().duration(350).ease("sin-in-out")
-			    .style('opacity', '1')
-			    .style('left', d3.event.pageX + 'px')
-			    .style('top',  d3.event.pageY + 'px')
-			    .style('background-color', 'rgba(0,0,255,0.3)')
-			    .text("(" + d3.event.pageX + ","+ d3.event.pageY  + ")")
-		    })
+		.attr("class","lineImag");
 
 	    var legend = vis.selectAll(".legend")
 		.data(["orange","blue"])
@@ -447,6 +474,19 @@
 		.attr("y", 70)
 		.attr("dy", "0.35em")
 		.text("Imaginary Part");
+
+	    // place the value at the intersection
+	    focus.append("text")
+		.attr("class", "yReal")
+		.style("opacity", 0.8)
+		.attr("dx", 8)
+		.attr("dy", "-.3em");
+
+	    focus.append("text")
+		.attr("class", "yImag")
+		.style("opacity", 0.8)
+		.attr("dx", 8)
+		.attr("dy", "-.3em");
 
 	    // not sure why this is necessary, but latex breaks if it's missing
 	    vis.append("div"); 
