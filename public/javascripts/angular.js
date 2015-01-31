@@ -300,7 +300,10 @@
 		// console.log("(Wavelength, Permittivity) = (" + w + "," + realPerm(w) + ")");
 
 		// if undefined, break out of the function
-		if(typeof w ===  'undefined'){return false;}
+		if(typeof w ===  'undefined'){
+		    console.log("tooltip undefined, w = " + w + ", i = " + i);
+		    return false;
+		}
 
 		// move real cursor
 		focus.select("circle.y1")            
@@ -494,7 +497,8 @@
 	    // define the update script for watching
     	    var watchCallback = function()
 	    {
-		var wavelengths = d3.range($scope.wmin,$scope.wmax,0.005*($scope.wmax-$scope.wmin));
+		// update the wavelengths variable (if including var, then it defines a new wavelengths in the current function scope)
+		wavelengths = d3.range($scope.wmin,$scope.wmax,0.005*($scope.wmax-$scope.wmin));
 
 		//define plot extents
 		WIDTH = el[0].offsetWidth;
