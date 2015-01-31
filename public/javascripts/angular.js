@@ -380,12 +380,12 @@
 		.style("stroke", "black")
 		.style("stroke-dasharray", "3,3")
 		.style("opacity", 0.5)
-
 		.attr("x1", WIDTH)
 		.attr("x2", WIDTH);
 
 	    // append the "invisible box" to detect mouse events
 	    vis.append("rect")
+		.attr("class","invisibleBox")
 		.attr("width", WIDTH)
 		.attr("height", HEIGHT)
 		.style("fill", "none")
@@ -591,6 +591,15 @@
 
 		yAxisLabel.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.45*HEIGHT) - MARGINS.top) + "),rotate(-90)");
 	
+		// update focus size elements
+		focus.select(".yRealLine")
+		    .attr("x1", WIDTH );
+		focus.select(".yImagLine")
+		    .attr("x1", WIDTH );
+		d3.select("rect.invisibleBox")
+		    .attr("width", WIDTH)
+		    .attr("height", HEIGHT);
+
 	    } // end of watch callback function
 	       
 	    // declare watch functions
