@@ -30,6 +30,9 @@ html(ng-app="drudeLorentzApp")
 
     link(rel='stylesheet', href='/stylesheets/style.css')
 
+    // material design bootstrap theme
+    // link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/css/material-wfont.css')
+
   body(ng-controller='materialController')
 
     div(ng-controller='materialController')
@@ -45,7 +48,7 @@ html(ng-app="drudeLorentzApp")
                       b Drude-Lorentz Model
                     span(class="glyphicons glyphicons-brightness-increase")
         div.row
-          div.col-md-6
-            block input
-          div.col-md-6
+          div.col-md-6.col-md-push-6
             block output
+          div.col-md-6.col-md-pull-6
+            block input
