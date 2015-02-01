@@ -71,7 +71,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://heroku_app33632912:3qhdkna9uenlqr6leieh37agqr@ds039421.mongolab.com:39421/heroku_app33632912');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
