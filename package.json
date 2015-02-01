@@ -18,7 +18,8 @@
     "monk":"*",
     "bootstrap":"*",
     "less":"*",
-    "mongoose":"*"
+    "mongoose":"*",
+    "mathjs","*"
   },
   "engines": {
     "npm": "1.4.28",
