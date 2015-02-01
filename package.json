@@ -19,7 +19,7 @@
     "bootstrap":"*",
     "less":"*",
     "mongoose":"*",
-    "mathjs","*"
+    "mathjs":"*"
   },
   "engines": {
     "npm": "1.4.28",
