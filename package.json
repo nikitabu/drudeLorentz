@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node bin/www"
   },
   "dependencies": {
 
@@ -17,7 +17,8 @@
     "mongodb":"*",
     "monk":"*",
     "bootstrap":"*",
-    "less":"*"
+    "less":"*",
+    "mongoose":"*"
   },
   "engines": {
     "npm": "1.4.28",
