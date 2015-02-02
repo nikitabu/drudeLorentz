@@ -5,7 +5,7 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #FFFFFF;
 }
 
 a:visited { 
@@ -31,12 +31,12 @@ a:hover{
 
 h1 {
   margin: 5px 5px;
-  font-size: 30px;
+  font-size: 180%;
 }
 
 h2 {
   margin: 2px 2px;
-  font-size: 24px;
+  font-size: 190%;
 }
 
 .container{
@@ -85,4 +85,27 @@ svg {
 .errorMessage{
     color : red;
     font-weight: bold;
+}
+
+.btn{
+    font-size: 120%;
+}
+
+.MathJax {
+    font-size: 110%;
+}
+
+.control-label{
+    font-size: 110%;
+}
+.axis text {
+    font-size: 110%;
+}
+
+.xLabel, yLabel {
+    font-size: 120%;
+}
+
+.legend {
+    font-size: 120%;
 }
