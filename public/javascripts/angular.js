@@ -439,14 +439,14 @@
 		.style("shape-rendering","crispEdges");
 
 	    var xAxisLabel = vis.append("text")
-		.attr("class", "xLabel")
+		.attr("class", "xLabel d3text")
 		.attr("text-anchor", "end")
 		.text("Wavelength [nm]")
 		.attr("transform","translate(" + Math.round(0.53*WIDTH + MARGINS.left) + "," + (Math.round(HEIGHT) + MARGINS.top) + ")")
 		.style("shape-rendering","crispEdges");
 
 	    var yAxisLabel = vis.append("text")
-		.attr("class", "yLabel")
+		.attr("class", "yLabel d3text")
 		.attr("text-anchor", "end")
 		.text("Permittivity")
 		.attr("transform","translate(" + Math.round(0.3*MARGINS.left) + "," + (Math.round(0.45*HEIGHT) - MARGINS.top) + "),rotate(-90)")
