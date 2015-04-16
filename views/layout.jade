@@ -14,6 +14,8 @@ html(ng-app="drudeLorentzApp")
      
     // import mathjax
     script(src='//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+    script.
+      MathJax.Hub.Config({messageStyle: 'none',tex2jax: {preview: 'none'}});
 
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js') // import angular js
     script(src='/javascripts/angular.js') //import angular controller
@@ -41,12 +43,17 @@ html(ng-app="drudeLorentzApp")
         div.row
           .nav(class="navbar navbar-default navbar-fixed-top ", role="banner", id="top")
             .container
-              .navbar-header
-                .navbar-brand
-                  h1
-                    a(href="/")
-                      b Drude-Lorentz Model
-                    span(class="glyphicons glyphicons-brightness-increase")
+              .navbar-header(style="width:100%")
+                ul.nav.navbar-nav
+                  li
+                    a.headertext(href='/')
+                      b Main
+                  li
+                    a.headertext(href='/about')
+                      b About
+                ul.nav.navbar-nav.navbar-right
+                  a(href='/')
+                    b Drude-Lorentz Model
         div.row
           div.col-md-6.col-md-push-6
             block output

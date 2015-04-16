@@ -1,0 +1,41 @@
+(function(){
+    var app = angular.module('drudeLorentzApp', []);
+
+    app.controller('materialController', function($scope, $http, $window){
+	$scope.materials = [{'name' : 'Au',
+	 'eps0' : '11'},
+	{'name' : 'Ag',
+	 'eps0' : '12'}];
+
+	$http.get('/materials')
+	     .success( function(data) {
+		 $scope.materials = data;
+	     })
+	    .error( function(data, status, headers, config){
+		console.log('error retreiving materials');
+	    })
+    });
+
+    app.controller('plotController', function($scope, $http, $window){
+	$scope.plot = [
+	    { 'wmin' : 2,
+	      'wmax' : 16,
+	      'parameter' : n // n = refractive index, e = permittivity
+	    }
+	];
+
+	$http.get('/plotparameters')
+	     .success( function(data) {
+		 $scope.plot = data;
+	     })
+	    .error( function(data, status, headers, config){
+		console.log('error retreiving plot parameters');
+	    })
+    });
+
+
+    app.directive('materialParameters',function(){});
+
+    app.directive('plot',function(){});
+
+})();

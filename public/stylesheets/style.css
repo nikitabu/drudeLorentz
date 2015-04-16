@@ -4,8 +4,8 @@ body {
   font: 14px Helvetica, Arial,"Lucida Grande", sans-serif;
 }
 
-a {
-  color: #FFFFFF;
+.headertext > .navbar-nav{
+  color: #FFFFFF !important;
 }
 
 a:visited { 
@@ -102,7 +102,7 @@ svg {
     font-size: 110%;
 }
 
-.xLabel, yLabel {
+.xLabel, yLabel, yReal, yImag {
     font-size: 120%;
 }
 
