@@ -1,3 +1,5 @@
+'use strict';
+
 // import dependencies
 var express = require('express');
 var path = require('path');
@@ -32,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req,res,next){
+app.use(function(req, res, next){
     req.db = db;  //add the database object to every request
     next();       //execute the next line serially
 });
@@ -82,34 +84,34 @@ db.once('open', function callback () {
 var Schema = mongoose.Schema;
 
 var materialSchema = new Schema({
-    name : String,
-    eps : Number,
-    meff : Number,
-    wp : Number,
-    f0 : Number,
-    g0 : Number,
-    f1 : Number,
-    w1 : Number,
-    g1 : Number,
-    f2 : Number,
-    w2 : Number,
-    g2 : Number,
-    f3 : Number,
-    w3 : Number,
-    g3 : Number,
-    f4 : Number,
-    w4 : Number,
-    g4 : Number,
-    f5 : Number,
-    w5 : Number,
-    g5 : Number,
+    name: String,
+    eps: Number,
+    meff: Number,
+    wp: Number,
+    f0: Number,
+    g0: Number,
+    f1: Number,
+    w1: Number,
+    g1: Number,
+    f2: Number,
+    w2: Number,
+    g2: Number,
+    f3: Number,
+    w3: Number,
+    g3: Number,
+    f4: Number,
+    w4: Number,
+    g4: Number,
+    f5: Number,
+    w5: Number,
+    g5: Number,
 });
 
 var material = mongoose.model('material', materialSchema)
 
 app.get('/material', function(req, res) {
     mongoose.model('material').find(function(err, material) {
-	res.send(material);
+        res.send(material);
     });
 });
 
