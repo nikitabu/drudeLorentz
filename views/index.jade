@@ -11,10 +11,6 @@ block input
             li(ng-repeat='material in materials')
               button(class="btn btn-primary", ng-class='currentClass(material.name)', ng-click="editCurrentMaterial(material);", type="submit")
                 {{material.name}}
-            li
-              a(class="btn btn-warning", role="button", href='/editmaterials') Edit
-            li
-              a(class="btn btn-warning", role="button", href='/newmaterial', ng-click='createNewMaterial()') New
     
     .panel.panel-default
       .panel-heading
@@ -51,6 +47,7 @@ block input
             td $f_5 = $#[span(mathjax-bind="currentMaterial.f5")]$\ [\mathrm{eV}]$
             td $\omega_5 = $#[span(mathjax-bind="currentMaterial.w5")]$\ [\mathrm{eV}]$
             td $\gamma_5 = $#[span(mathjax-bind="currentMaterial.g5")]$\ [\mathrm{eV}]$
+
 block output
   .panel.panel-default
     .panel-body
