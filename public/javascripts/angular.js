@@ -144,10 +144,10 @@
             controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
                 $scope.$watch($attrs.mathjaxBind, function(value) {
                     var $script = angular.element('<script type="math/tex">')
-                        .html(value === undefined ? '' : value);
-                    $element.html('');
-                    $element.append($script);
-                    MathJax.Hub.Queue(['Reprocess', MathJax.Hub, $element[0]]);
+                        .html(value === undefined ? '' : value); // if mathjax-bind is undefined, set to nothing, otherwise set to the value?
+                    $element.html(''); // set the element html to nothing
+                    $element.append($script); //append the angular script
+                    MathJax.Hub.Queue(['Reprocess', MathJax.Hub, $element[0]]); // add reprocessing of this element to the MathJax queue
                 });
             }]
         };
@@ -418,6 +418,19 @@
                 .interpolate('linear');
 
             // append the line to the svg
+            var lineRealObject = vis.append("svg:path")
+                .attr("d", lineReal(wavelengths))
+                .attr("stroke", "blue")
+                .attr("stroke-width", 2)
+                .attr("fill", "none")
+                .attr("class","lineReal");
+
+            var lineImagObject = vis.append("svg:path")
+                .attr("d", lineImag(wavelengths))
+                .attr("stroke", "orange")
+                .attr("stroke-width", 2)
+                .attr("fill", "none")
+                .attr("class","lineImag");
 
             var legend = vis.selectAll('.legend')
                 .data(['orange', 'blue'])

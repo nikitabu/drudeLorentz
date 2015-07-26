@@ -107,7 +107,7 @@ var materialSchema = new Schema({
     g5: Number,
 });
 
-var material = mongoose.model('material', materialSchema)
+var material = mongoose.model('material', materialSchema);
 
 app.get('/material', function(req, res) {
     mongoose.model('material').find(function(err, material) {
